@@ -80,7 +80,7 @@ class Database:
                         )''')
         
         try:
-            self.cursor.execute('INSERT INTO users VALUES(1, "rend", "skripsi_sahid", "boss")')
+            self.cursor.execute('INSERT INTO users VALUES(1, "admin", "admin", "boss")')
         except:
             pass
         
