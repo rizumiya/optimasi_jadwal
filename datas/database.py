@@ -148,7 +148,7 @@ class Database:
 
     # Dumping sql database as txt
     def dumpSQL(self):
-        with open('db_autobot.txt', 'w') as f:
+        with open('base_sqlite_values.txt', 'w') as f:
             for line in self.conn.iterdump():
                 f.write('%s\n' % line)
 
