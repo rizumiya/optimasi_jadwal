@@ -520,19 +520,6 @@ class DisplayMgr:
         # print(table1)
         return max(fittest)
 
-    # def print_schedule_as_table(self, schedule): ASLII
-    #     classes = schedule.get_classes()
-    #     table = prettytable.PrettyTable(['Class # ', 'Semester', 'Course (number, max # of students)', 'Room (Capacity)', 'Instructor', 'Time'])
-    #     for i in range(0, len(classes)):
-    #         table.add_row([str(i), classes[i].get_dept().get_name(), classes[i].get_course().get_name() + " (" +
-    #                        classes[i].get_course().get_number() + ", " +
-    #                        str(classes[i].get_course().get_maxNumbOfStudents()) + ")",
-    #                        classes[i].get_room().get_number() + " (" + str(classes[i].get_room().get_seatingCapacity()) + ")",
-    #                        classes[i].get_instructor().get_name() + " (" + str(classes[i].get_instructor().get_id()) +")",
-    #                        classes[i].get_meetingTime().get_time() + " (" + str(classes[i].get_meetingTime().get_id()) +")"
-    #                        ])
-    #     print(table)
-
     def print_schedule_as_table(self, schedule):
         classes = schedule.get_classes()
         table = prettytable.PrettyTable(
@@ -554,7 +541,7 @@ class DisplayMgr:
                  (', ').join(waktu),
                  classes[i].get_room().get_number()
                  ])
-        print(table)
+        # print(table)
         return table
 
 
@@ -577,9 +564,9 @@ def run(nilai_data):
     banyak_iterasi = 0
     nilai_fitnes = None
     displayMgr = DisplayMgr()
-    displayMgr.print_available_data()
+    # displayMgr.print_available_data()
     generationNumber = 0
-    print("\n> Generation # " + str(generationNumber))
+    # print("\n> Generation # " + str(generationNumber))
     population = Population(POPULATION_SIZE)
     population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
     nilai_fitnes = displayMgr.print_generation(population)
@@ -588,7 +575,7 @@ def run(nilai_data):
     geneticAlgorithm = GeneticAlgorithm()
     while (population.get_schedules()[0].get_fitness() != 1.0):
         generationNumber += 1
-        print("\n> Generation # " + str(generationNumber))
+        # print("\n> Generation # " + str(generationNumber))
         population = geneticAlgorithm.evolve(population)
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         nilai_fitnes_2 = displayMgr.print_generation(population)
@@ -600,6 +587,6 @@ def run(nilai_data):
             banyak_iterasi = 0
         else:
             break
-    print("\n\n - - - - - - - - - - - - - - - - - - - - ", nilai_fitnes)
+    # print("\n\n - - - - - - - - - - - - - - - - - - - - ", nilai_fitnes)
     cetak_ke_txt(hasil)
-    return 'OK'
+    return 'OK', nilai_fitnes
