@@ -30,6 +30,8 @@ def login():
             password = st.text_input("Password", type="password").strip()
         login_button = st.form_submit_button('Login')
 
+        st.caption("Global account : `admin`:`admin`")
+
     if login_button:
         if check_login(username, password):
             st.session_state["login"] = True
