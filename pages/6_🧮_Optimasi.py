@@ -76,7 +76,13 @@ def main():
                             text = tampil_hasil()
                         end_time = time.time()
                         elapsed_time = end_time - start_time
-                        st.write(f"Waktu yang dibutuhkan: {elapsed_time} detik, dengan nilai fitnes : {run_optimizer[1]}")
+                        if elapsed_time >= 60:
+                            elapsed_time = elapsed_time / 60
+                            waktu = "{:.3f} menit".format(elapsed_time)
+                        else:
+                            waktu = "{:.3f} detik".format(elapsed_time)
+                        st.write(f"Waktu yang dibutuhkan: {waktu}, dengan nilai fitnes : {run_optimizer[1]}")
+                            
                     except Exception as e:
                         st.error('Pastikan seluruh data benar!', icon="🚨")
                         raise e
