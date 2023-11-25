@@ -115,7 +115,7 @@ class Schedule:
         # banyak semester yang di generate
         for i in range(0, len(depts)):
             courses = depts[i].get_courses()
-            for j in range(0, len(courses)):                # banyak matkul di 1 semester
+            for j in range(0, len(courses)): # banyak matkul di 1 semester
                 kelas = courses[j].get_kelas()
                 for k in range(1, kelas + 1):
                     # banyak kelas yang di 1 matkul
@@ -587,6 +587,5 @@ def run(nilai_data):
             banyak_iterasi = 0
         else:
             break
-    # print("\n\n - - - - - - - - - - - - - - - - - - - - ", nilai_fitnes)
     cetak_ke_txt(hasil)
     return 'OK', nilai_fitnes
