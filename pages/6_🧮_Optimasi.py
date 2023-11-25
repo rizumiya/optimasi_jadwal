@@ -71,11 +71,12 @@ def main():
                     id_semester = query.read_datas('semesters', None, 'semester_ke=? AND tahun_ajaran=?', [semester, tahun_ajaran])[0]
                     try:
                         start_time = time.time()
-                        if run(Data(id_semester[0])) == 'OK':
+                        run_optimizer = run(Data(id_semester[0]))
+                        if  run_optimizer[0] == 'OK':
                             text = tampil_hasil()
                         end_time = time.time()
                         elapsed_time = end_time - start_time
-                        st.write(f"Waktu yang dibutuhkan: {elapsed_time} detik, dengan nilai fitnes : {run.nilai_fitnes}")
+                        st.write(f"Waktu yang dibutuhkan: {elapsed_time} detik, dengan nilai fitnes : {run_optimizer[1]}")
                     except Exception as e:
                         st.error('Pastikan seluruh data benar!', icon="🚨")
                         raise e
