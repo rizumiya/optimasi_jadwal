@@ -1,0 +1,33 @@
+id,unique_id,nama_matkul,metode,sks,perkiraan_peserta,kelas
+1,211810230,Dasar Pemrograman,Offline,3,450,10
+2,211810331,Dasar Sistem Komputer,Offline,2,450,10
+3,211810431,Kalkulus Informatika,Offline,3,450,10
+4,211810531,Logika Informatika,Offline,3,450,10
+5,211810630,Manajemen Data dan Informasi,Offline,2,450,10
+6,211810811,Praktikum Dasar Pemrograman,Offline,2,450,10
+7,211830341,Basis Data,Offline,3,450,10
+8,211830431,Pemrograman Berorientasi Objek,Offline,2,450,10
+9,211830531,Sistem Operasi,Online,2,450,10
+10,211830641,Statistika Informatika,Offline,3,450,10
+11,211830731,Struktur Data,Offline,2,450,10
+12,211850531,Forensik Digital,Offline,2,150,4
+13,211850631,Grafika Terapan,Offline,2,150,4
+14,211850131,Keamanan Komputer,Online,3,450,10
+15,211851131,Pembelajar Mesin,Offline,2,200,5
+16,211850231,Pemrograman Mobile,Online,2,450,10
+17,211850731,Pemrograman Web Dinamis,Offline,3,150,4
+18,211850831,Penambangan Data/Data Mining,Offline,3,150,4
+19,211850320,Pengantar Manajemen dan Prinsip Proyek,Online,3,450,10
+20,211851231,Pengolahan Citra,Offline,2,150,4
+21,211850931,Penjaminan Kualitas Perangkat Lunak,Offline,3,50,2
+22,211851331,Robotika Informatika,Offline,2,50,2
+23,211851431,Sistem Pendukung Keputusan,Offline,3,100,3
+24,211851531,Sistem Temu Balik Informasi,Offline,2,100,3
+25,211851031,Teknik Optimasi,Offline,3,50,2
+26,211850420,Teori Bahasa Otomata,Online,2,450,10
+27,211860120,Manajemen Proyek Teknologi Informasi,Online,2,20,1
+28,211860220,Metodologi Penelitian,Online,3,450,10
+29,211870320,Kewirausahaan,Online,3,200,5
+30,211870630,Praktek Magang,Online,2,200,5
+31,211870720,Sosio Informatika,Online,3,200,5
+32,211880260,Skripsi,Online,0,450,1
