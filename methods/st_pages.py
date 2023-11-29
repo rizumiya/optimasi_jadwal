@@ -11,7 +11,7 @@ dbu = dbh.DB_Umum()
 
 def clean_view():
     st.set_page_config(
-        page_title='UserAutoBot WebUI', 
+        page_title='Optimasi Jadwal - Rizumiya', 
         page_icon='🧊', layout='wide')
 
     hide_streamlit_style = """
