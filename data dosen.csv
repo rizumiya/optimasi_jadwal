@@ -1,23 +1,23 @@
 id,nidn,nama,matkul,waktu
-1,98765645710,"Michael Johnson",211830731 - A | B | C | D | E,Tersedia setiap waktu
+1,98765645710,"Michael Johnson","211830731 - A | B | C | D | E",Tersedia setiap waktu
 2,87654564579,"Sarah Williams","211850131 - D | I | J, 211810331 - D",Tersedia setiap waktu
 3,7654986798,"Christopher Brown","211810431 - C | D, 211860220 - F, 211851131 - E, 211851231 - A | B | C",Tersedia setiap waktu
 4,6543298675,"Amanda Jones","211810331 - A | B | C | I | J, 211830431 - G | H, 211850931 - B",Tersedia setiap waktu
 5,54328986986,"Daniel Davis","211810331 - E | F | G | H, 211870320 - A, 211830531 - D | E | H",Tersedia setiap waktu
-6,43210978655,"Jessica Miller",211860220 - G | H,Tersedia setiap waktu
+6,43210978655,"Jessica Miller","211860220 - G | H",Tersedia setiap waktu
 7,32187655654,"Matthew Wilson","211830341 - E, 211830641 - A | B | D, 211851431 - B, 211860220 - B",Tersedia setiap waktu
 8,24768499543,"Emily Moore","211810531 - A | B | C, 211850131 - A | B, 211850320 - B | C",Tersedia setiap waktu
 9,1098213412,"David Taylor","211810230 - G | H | I | J, 211810811 - A, 211870320 - B | C | D | E",Tersedia setiap waktu
-10,1098448987,"Olivia Anderson",211850531 - D,Tersedia setiap waktu
-11,9823423410,"Andrew Thomas",211850731 - A | B | C | D,Tersedia setiap waktu
-12,8765354209,"Sophia Jackson",211830431 - E | F | I | J,Tersedia setiap waktu
+10,1098448987,"Olivia Anderson","211850531 - D,Tersedia setiap waktu
+11,9823423410,"Andrew Thomas","211850731 - A | B | C | D",Tersedia setiap waktu
+12,8765354209,"Sophia Jackson","211830431 - E | F | I | J",Tersedia setiap waktu
 13,7654245358,"James White","211810531 - H | I | J, 211830531 - A | B, 211850320 - G, 211851531 - A",Tersedia setiap waktu
 14,6534526987,"Ashley Harris","211810531 - D | E | F | G, 211851131 - B, 211850831 - A, 211851431 - A",Tersedia setiap waktu
 15,5432109876,"Joshua Martin","211850231 - A | B | C | D | I, 211870720 - D | E, 211810431 - J",Tersedia setiap waktu
 16,4234598765,"Elizabeth Thompson","211830431 - C | D, 211860220 - C | D, 211830531 - F | G, 211870630 - D | E",Tersedia setiap waktu
 17,3210235678,"Ryan Garcia","211810431 - A | B | E, 211851231 - D, 211850631 - A | B | C | D",Tersedia setiap waktu
 18,2342476543,"Lily Martinez","211810630 - C | E | F | G, 211850320 - H | I | J, 211850420 - C",Tersedia setiap waktu
-19,1098786782,"John Robinson",211810431 - G | H,Tersedia setiap waktu
+19,1098786782,"John Robinson","211810431 - G | H",Tersedia setiap waktu
 20,1098713123,"Grace Clark","211830431 - A | B, 211810431 - F | I, 211830531 - F | G, 211851331 - A | B",Tersedia setiap waktu
 21,9876535670,"Nathan Rodriguez","211850831 - D | C, 211850420 - D | I | J",Tersedia setiap waktu
 22,8765439779,"Chloe Lewis","211850931 - A, 211851031 - A | B",Tersedia setiap waktu
@@ -30,7 +30,7 @@ id,nidn,nama,matkul,waktu
 29,1098765432,"Christian Allen","211810630 - D, 211850131 - C | G, 211850231 - G | H, 211850320 - A",Tersedia setiap waktu
 30,1098765431,"Anna Hernandez","211810230 - D | E | F, 211810811 - , 211850231 - E | F | J",Tersedia setiap waktu
 31,9876543210,"Justin Nelson","211830341 - C | D, 211851431 - C, 211830641 - F | J",Tersedia setiap waktu
-32,8765432109,"Lauren Hill",211860220 - I | J,Tersedia setiap waktu
+32,8765432109,"Lauren Hill","211860220 - I | J",Tersedia setiap waktu
 33,7654321098,"Kevin Adams","211850131 - E | F | H, 211870720 - A | B | C, 211830531 - I | J",Tersedia setiap waktu
 34,6543210987,"Kayla Baker","211810230 - B | C | A, 211810811 - B | C | A, 211830731 - H | I | J",Tersedia setiap waktu
-35,00000000,Brandon Carter,211880260 - A,Tersedia setiap waktu
+35,00000000,Brandon Carter,"211880260 - A",Tersedia setiap waktu
