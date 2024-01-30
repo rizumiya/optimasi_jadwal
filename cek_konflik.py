@@ -47,7 +47,7 @@ def check_konflik(file_path):
                         )
                         konflik["total_konflik"] += 1
                         break
-                    if item_1['ruang'] == item_2['ruang'] and item_1 != "Online":
+                    if item_1['ruang'] == item_2['ruang'] and item_1['ruang'] != "Online":
                         konflik["bentrok_ruangan"] += 1
                         konflik['bentrok'].append(
                             f"bentrok ruangan: dosen: {item_1['dosen']} matkul: {item_1['matkul']} kelas: {item_1['kelas']} dengan dosen: {item_2['dosen']} matkul: {item_2['matkul']} kelas: {item_2['kelas']}"
