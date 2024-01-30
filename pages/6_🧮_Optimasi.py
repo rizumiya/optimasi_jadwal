@@ -85,7 +85,7 @@ def main():
                     except Exception as e:
                         st.error('Pastikan seluruh data benar!', icon="🚨")
                         st.caption('hint: cek mata kuliah yang belum memiliki dosen pengampu')
-                        raise e
+                        # raise e
                 else:
                     st.error('Jangan buang-buang waktu ku..', icon="🚨")
             else:
