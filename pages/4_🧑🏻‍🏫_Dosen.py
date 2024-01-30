@@ -7,18 +7,12 @@ from methods import st_pages, dbhelper
 
 st_pages.clean_view()
 db = database.Database()
-dbu = dbhelper.DB_Umum()
-dbh = dbhelper.DB_Hari()
-dbd = dbhelper.DB_Dosen()
-dbm = dbhelper.DB_Matkul()
-dbut = dbhelper.DB_Unavailable()
-dbpc = dbhelper.Data_ProfsCourses()
 query = dbhelper.Query()
 
 
 # Mengambil data hari, dan mengubahnya menjadi format yang hari, jam
 def tampil_hari():
-    list_hari = dbh.ambil_semua_hari()
+    list_hari = query.read_datas('daytimes')
     if list_hari:
         hari = [f"{hari}, {jam}" for _, _, hari, jam, _ in list_hari]
     else:
@@ -27,7 +21,7 @@ def tampil_hari():
 
 
 def tampil_matkul():
-    list_matkul = dbm.ambil_matkul()
+    list_matkul = query.read_datas('courses')
     if list_matkul:
         matkul = [f'{data[1]} - {data[2]}' for data in list_matkul]
     else:
@@ -52,82 +46,91 @@ def tampil_matkul_dosen(id_dosen):
 
 
 #cek waktu bl
-@st.cache_resource(show_spinner="Memvalidasi data dosen")
+@st.cache_resource(show_spinner="Memvalidasi data dosen dengan waktu sakral")
 def check_n_delete_waktu_bl():
-    datas = dbut.check_waktu_bl()
+    datas = query.read_datas('unavailable_times')
     for data in datas:
-        if data[2] not in [hari[0] for hari in dbh.check_hari_jam(None, None)]:
-            dbut.hapus_unavailable_times("id_waktu", data[2])
-        if data[1] not in [dosen[0] for dosen in dbd.check_dosen(None, None)]:
-            dbut.hapus_unavailable_times("id_dosen", data[1])
+        if data[2] not in [hari[0] for hari in query.read_datas('daytimes')]:
+            query.delete_data('unavailable_times', f'id_waktu = {data[2]}')
+        if data[1] not in [dosen[0] for dosen in query.read_datas('professors')]:
+            query.delete_data('unavailable_times', f'id_dosen = {data[1]}')
 
 
 #cek dan hapus data prof_courses
-@st.cache_resource(show_spinner="Memvalidasi data dosen")
+@st.cache_resource(show_spinner="Memvalidasi data dosen dengan mata kuliah yang diampu")
 def check_n_delete_prof_courses():
-    datas = dbpc.check_profs_courses()
+    datas = query.read_datas('profs_courses')
     for data in datas:
-        if data[1] not in [dosen[0] for dosen in dbd.check_dosen(None, None)]:
-            dbpc.hapus_profs_courses("id_dosen", data[1])
-        if data[2] not in [matkul[0] for matkul in dbm.check_matkul(None, None)]:
-            dbpc.hapus_profs_courses("id_matkul", data[2])
+        if data[1] not in [dosen[0] for dosen in query.read_datas('professors')]:
+            query.delete_data('profs_courses', f'id_dosen = {data[1]}')
+        if data[2] not in [matkul[0] for matkul in query.read_datas('courses')]:
+            query.delete_data('profs_courses', f'id_matkul = {data[2]}')
+
+
+@st.cache_resource(show_spinner="Memvalidasi data dosen dengan kelas sks")
+def check_n_delete_prof_classes():
+    datas = query.read_datas('profs_classes')
+    for data in datas:
+        if data[1] not in [dosen[0] for dosen in query.read_datas('professors')]:
+            query.delete_data('profs_classes', f'id_dosen = {data[1]}')
+        if data[2] not in [matkul[0] for matkul in query.read_datas('courses')]:
+            query.delete_data('profs_classes', f'id_matkul = {data[2]}')
 
 
 # Menambahkan data waktu yang tidak bisa dihadiri dosen
 def tambah_unavailable_time(hari_jam_bl, nidn, nama, imp=False):
-    id_dosen = dbd.check_dosen(nidn, nama)[0][0]
+    id_dosen = query.read_datas('professors', ['id'], 'nidn=? AND nama=?', [nidn, nama])[0][0]
     if imp:
         if not hari_jam_bl == 'Tersedia setiap waktu':
             array_hari = hari_jam_bl.split(", ")
             for h in array_hari:
-                id_hari = dbh.check_hari_jam(None, None, h)[0][0]
+                id_hari = query.read_datas('daytimes', ['id'], f'unique_id={h}')[0][0]
                 if id_hari:
                     values = [id_dosen, id_hari]
-                    dbut.tambah_waktu_bl(values)
+                    query.create_data('unavailable_times', ["id_dosen", "id_waktu"], values)
         return
     for i in range(0, len(hari_jam_bl)):
         hari, jam = hari_jam_bl[i].split(", ")
-        id_hari = dbh.check_hari_jam(hari, jam)[0][0]
+        id_hari = query.read_datas('daytimes', ['id'], 'nama_hari=? AND waktu_kuliah=?', [hari, jam])[0][0]
         values = [id_dosen, id_hari]
-        dbut.tambah_waktu_bl(values)
+        query.create_data('unavailable_times', ["id_dosen", "id_waktu"], values)
 
 
 #def buat tambah data dosen pengampu
 def tambah_profs_courses(matkuls, nidn, nama, imp=False):
-    id_dosen = dbd.check_dosen(nidn, nama)[0][0]
+    id_dosen = query.read_datas('professors', ['id'], 'nidn=? AND nama=?', [nidn, nama])[0][0]
     if imp:
         if not matkuls == 'Belum diatur':
             array_matkul = matkuls.split(", ")
             for m in array_matkul:
                 matkul, array_kelas = m.split(" - ")
-                id_matkul = dbm.check_matkul(matkul, None)[0][0]
+                id_matkul = query.read_datas('courses', ['id'], f'unique_id={matkul}')[0][0]
                 if id_matkul:
                     kelas = array_kelas.split(" | ")
                     for k in kelas:
                         query.create_data('profs_classes', ['id_dosen', 'id_matkul', 'kelas'], [id_dosen, id_matkul, k])
                     values = [id_dosen, id_matkul]
-                    dbpc.tambah_dosen_pengampu(values)
+                    query.create_data('profs_courses', ["id_dosen", "id_matkul"], values)
         return
     for i in range(0, len(matkuls)):
         kode, nama = matkuls[i].split(" - ")
-        id_matkul = dbm.check_matkul(kode, nama)[0][0]
+        id_matkul = query.read_datas('courses', ['id'], 'unique_id=? AND nama_matkul=?', [kode, nama])[0][0]
         values = [id_dosen, id_matkul]
-        dbpc.tambah_dosen_pengampu(values)
+        query.create_data('profs_courses', ["id_dosen", "id_matkul"], values)
 
 
 # Menambahkan data dosen jika data dosen dengan nisn dan nama yang sama belum ada
 def add_dosen(id_dosen, nidn, nama):
-    if not dbd.check_dosen(nidn, nama):
+    if not query.read_datas('professors', None, 'nidn=? AND nama=?', [nidn, nama]):
         if not id_dosen:
             try:
-                dosens = dbd.check_dosen(None, None)
+                dosens = query.read_datas('professors')
                 id_dosen = max(dosens, key=lambda x: x[0])[0] + 1
             except:
                 id_dosen = 1
-        dbd.table_name = "professors"
         fields = ["id", "nidn", "nama"]
         values = [id_dosen, nidn, nama]
-        dbd.tambah_dosen(fields, values)
+        query.create_data('professors', fields, values)
         return True
     return False
 
@@ -135,7 +138,12 @@ def add_dosen(id_dosen, nidn, nama):
 @st.cache_resource(show_spinner="Memuat data dosen")
 def get_dosen_waktu(id_dosen, for_list=False):
     waktu_bl = []
-    waktu_hari = dbd.ambil_dosen_waktu(id_dosen)
+    waktu_hari = query.read_datas(
+        "daytimes AS dt JOIN unavailable_times AS ut ON dt.id = ut.id_waktu "
+        "JOIN professors AS ps ON ps.id = ut.id_dosen",
+        ['ps.id', 'ps.nidn', 'ps.nama', 'dt.id', 'dt.unique_id', 'dt.nama_hari', 'dt.waktu_kuliah'],
+        f'ps.id={id_dosen}'
+    )
     if for_list:
         return waktu_hari
     if waktu_hari:
@@ -152,7 +160,12 @@ def get_dosen_waktu(id_dosen, for_list=False):
 @st.cache_resource(show_spinner="Memuat data dosen")
 def get_dosen_matkul(id_dosen, for_list=False):
     matkul = []
-    mata_kuliah = dbd.ambil_dosen_matkul(id_dosen)
+    mata_kuliah = query.read_datas(
+        "courses AS cc JOIN profs_courses AS pc ON cc.id = pc.id_matkul "
+        "JOIN professors AS ps ON ps.id = pc.id_dosen",
+        ['ps.id', 'ps.nidn', 'ps.nama', 'cc.id', 'cc.unique_id', 'cc.nama_matkul'],
+        f'ps.id={id_dosen}'
+    )
     if for_list:
         return mata_kuliah
     kelases = query.read_datas(
@@ -181,7 +194,7 @@ def get_dosen_matkul(id_dosen, for_list=False):
 # Mengambil data seluruh dosen
 @st.cache_resource(show_spinner="Memuat data dosen")
 def get_dosen():
-    dosens = dbd.ambil_dosen()
+    dosens = query.read_datas('professors')
     result = []
 
     if dosens:
@@ -199,7 +212,7 @@ def get_dosen():
 # Tambah data dari tabel
 def simpan_data(table, conn, keys, data_iter):
     # drop table terkait
-    dbu.restart_table('professors')
+    st_pages.restart_table('professors')
     data = [dict(zip(keys, row)) for row in data_iter]
 
     for x in data:
@@ -336,7 +349,7 @@ def atur_matkul_multiselect(matkul):
 
 # Konten dari tab3 Ubah data dosen
 def inside_tab3():
-    dosens = dbd.ambil_dosen()
+    dosens = query.read_datas('professors')
     hari = tampil_hari()
     matkul = tampil_matkul()
 
@@ -391,7 +404,7 @@ def inside_tab3():
 
         if submit_btn2:
             if not st.session_state['nip_dosen'] == '' and not st.session_state['id_dosen'] == '':
-                dbpc.hapus_profs_courses('id_dosen', st.session_state['id_dosen'])
+                query.delete_data('profs_courses', 'id_dosen = ?', [st.session_state['id_dosen']])
                 tambah_profs_courses(
                     list_matkul, 
                     st.session_state['nip_dosen'], 
@@ -410,7 +423,7 @@ def inside_tab3():
 
         if submit_btn1:
             if not st.session_state['nip_dosen'] == '' and not st.session_state['id_dosen'] == '':
-                dbut.hapus_unavailable_times('id_dosen', st.session_state['id_dosen'])
+                query.delete_data('unavailable_times', 'id_dosen = ?', [st.session_state['id_dosen']])
                 tambah_unavailable_time(
                     hari_jam_bl, 
                     st.session_state['nip_dosen'], 
@@ -443,7 +456,7 @@ def on_selectbox_change():
 
 
 def inside_tab4():
-    dosens = dbd.ambil_dosen()
+    dosens = query.read_datas('professors')
 
     if 'tab4' not in st.session_state:
         st.session_state['tab4'] = True
@@ -499,6 +512,7 @@ def main():
         inside_tab1()
         check_n_delete_waktu_bl()
         check_n_delete_prof_courses()
+        check_n_delete_prof_classes()
     with tab2:
         with st.expander("Tambah Data Manual", expanded=False):
             inside_tab2()

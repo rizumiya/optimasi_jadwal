@@ -7,33 +7,31 @@ from methods import st_pages, dbhelper
 
 st_pages.clean_view()
 db = database.Database()
-dbu = dbhelper.DB_Umum()
-dbm = dbhelper.DB_Matkul()
+query = dbhelper.Query()
 
 
 # Menambahkan data Mata Kuliah jika data Mata Kuliah dengan kode atau nama yang sama belum ada
-def add_matkul(id_matkul, kode_matkul, nama_matkul, metode, sks, peserta):
+def add_matkul(id_matkul, kode_matkul, nama_matkul, metode, sks, peserta, jenis_matkul):
     kelas = None
     list_gak_ada_kelas = [211880260, 211870520] # Atur mata kuliah yang gak butuh kelas disini..
-    if not dbm.check_matkul(kode_matkul, nama_matkul):
+    if not query.read_datas('courses', None, 'unique_id=? AND nama_matkul=?', [kode_matkul, nama_matkul]):
         if not id_matkul:
             try:
-                matkuls = dbm.check_matkul(None, None)
+                matkuls = query.read_datas('courses')
                 id_matkul = max(matkuls, key=lambda x: x[0])[0] + 1
             except:
                 id_matkul = 1
-        dbm.table_name = "courses"
         if peserta:
             kelas = (int(peserta) // 50) + 1
 
         if int(kode_matkul) in list_gak_ada_kelas:
             kelas = 1
         fields = ["id", "unique_id", "nama_matkul", "metode", 
-                  "sks", "perkiraan_peserta", "kelas"]
+                  "sks", "perkiraan_peserta", "kelas", "jenis_matkul"]
         values = [id_matkul, kode_matkul, nama_matkul, 
-                  metode, sks, peserta, kelas]
+                  metode, sks, peserta, kelas, jenis_matkul]
         try:
-            dbm.tambah_matkul(fields, values)
+            query.create_data('courses', fields, values)
             return True
         except:
             return
@@ -43,27 +41,27 @@ def add_matkul(id_matkul, kode_matkul, nama_matkul, metode, sks, peserta):
 # Mengambil data seluruh Mata Kuliah
 @st.cache_resource(show_spinner="Memuat data mata kuliah")
 def get_matkul():
-    matkuls = dbm.ambil_matkul()
+    matkuls = query.read_datas('courses')
     result = []
 
     if matkuls:
         for matkul in matkuls:
-            result.append({"id": matkul[0], "unique_id": matkul[1], "nama_matkul": matkul[2], "metode": matkul[3], "sks": matkul[4], "perkiraan_peserta": matkul[5], "kelas": matkul[6]})
+            result.append({"id": matkul[0], "unique_id": matkul[1], "nama_matkul": matkul[2], "metode": matkul[3], "sks": matkul[4], "perkiraan_peserta": matkul[5], "kelas": matkul[6], "jenis_matkul": matkul[7]})
         return result
     
-    result = [{"id": 1, "unique_id": None, "nama_matkul": None, "metode": None, "sks": None, "perkiraan_peserta": None, "kelas": None}]
+    result = [{"id": 1, "unique_id": None, "nama_matkul": None, "metode": None, "sks": None, "perkiraan_peserta": None, "kelas": None, "jenis_matkul": None}]
     return result
 
 
 # Tambah data dari tabel
 def simpan_data(table, conn, keys, data_iter):
     # drop table terkait
-    dbu.restart_table('courses')
+    st_pages.restart_table('courses')
     data = [dict(zip(keys, row)) for row in data_iter]
 
     for x in data:
-        id, unique_id, nama_matkul, metode, sks, peserta = x['id'], x['unique_id'], x['nama_matkul'], x['metode'], x['sks'], x['perkiraan_peserta']
-        add_matkul(id, unique_id, nama_matkul, metode, sks, peserta)
+        id, unique_id, nama_matkul, metode, sks, peserta, jenis = x['id'], x['unique_id'], x['nama_matkul'], x['metode'], x['sks'], x['perkiraan_peserta'], x['jenis_matkul']
+        add_matkul(id, unique_id, nama_matkul, metode, sks, peserta, jenis)
 
 
 # Konten dari tab1 Tampil data ruang
@@ -94,11 +92,12 @@ def inside_tab1():
     df = pd.DataFrame(matkul)
     edited_df = st.data_editor(
         df, 
-        column_order=['unique_id', 'nama_matkul', 'metode', 'sks', 'perkiraan_peserta', 'kelas'],
+        column_order=['unique_id', 'nama_matkul', 'metode', 'jenis_matkul', 'sks', 'perkiraan_peserta', 'kelas'],
         column_config={
             "unique_id": st.column_config.TextColumn("Kode"), 
             "nama_matkul": st.column_config.TextColumn("Nama Mata Kuliah"), 
             "metode": st.column_config.SelectboxColumn("Metode", required=True, options=['Offline', 'Online']),
+            "jenis_matkul": st.column_config.SelectboxColumn("Jenis", required=True, options=['Reguler', 'Pilihan']),
             "sks": st.column_config.NumberColumn("SKS"),
             "perkiraan_peserta": st.column_config.NumberColumn("Peserta"),
             "kelas": st.column_config.NumberColumn("Kelas")
@@ -122,11 +121,13 @@ def inside_tab1():
 # Konten dari tab2 Tampil data Mata Kuliah
 def inside_tab2():
     with st.form(key='my_form'):        
-        cols1 = st.columns([1,2])
+        cols1 = st.columns([1, 2, 1])
         with cols1[0]:
             kode_matkul = st.text_input('Kode Mata Kuliah')
         with cols1[1]:
             nama_matkul = st.text_input('Nama Mata Kuliah')
+        with cols1[2]:
+            jenis_matkul = st.selectbox('Jenis Mata Kuliah', ['Reguler', 'Pilihan'], index=0)
 
         cols2 = st.columns([1, 1, 1])
         with cols2[0]:
@@ -139,9 +140,9 @@ def inside_tab2():
         submit = st.form_submit_button('Tambah')
 
         if submit:
-            if nama_matkul and metode and sks and peserta:
+            if nama_matkul and sks and peserta:
                 if st_pages.is_number([sks, peserta], ['SKS', 'perkiraan peserta']):
-                    if add_matkul(None, kode_matkul, nama_matkul, metode, sks, peserta):
+                    if add_matkul(None, kode_matkul, nama_matkul, metode, sks, peserta, jenis_matkul):
                         st.success('Data mata kuliah berhasil ditambahkan', icon="✅")
                         time.sleep(1)
                         st.cache_resource.clear()
@@ -160,7 +161,7 @@ def import_section():
     if raw_data and st.button("💾 Tambahkan", key="add_matkul"):
         try:
             for row in df.itertuples():
-                add_matkul(None, row[2], row[3], row[4], row[5], row[6])
+                add_matkul(None, row[2], row[3], row[4], row[5], row[6], row[8])
             st.success('Data mata kuliah berhasil ditambahkan', icon="✅")
         except Exception as e:
             st.error(f"Terjadi kesalahan saat menambahkan data! {e}", icon="🚨")

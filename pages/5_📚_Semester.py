@@ -7,23 +7,24 @@ from datas import database
 st_pages.clean_view()
 
 db = database.Database()
-dbu = dbhelper.DB_Umum()
-dbm = dbhelper.DB_Matkul()
-dbs = dbhelper.DB_Semester()
-dbsc = dbhelper.DB_SemsCourses()
-
+query = dbhelper.Query()
 
 
 def get_sem_course(id_semester, for_list=None):
     matkul = []
-    list_semmat = dbsc.ambil_sems_courses(id_semester)
+    list_semmat = query.read_datas(
+        "courses AS c JOIN sems_courses AS sc ON c.id = sc.id_matkul "
+        "JOIN semesters AS s ON s.id = sc.id_semester",
+        ['c.id', 'c.unique_id', 'c.nama_matkul', 'c.sks', 's.id', 's.semester_ke', 's.tahun_ajaran', 's.total_sks'],
+        f's.id={id_semester}'
+    )
     if for_list:
         return list_semmat
     
 
 @st.cache_resource(show_spinner="Memuat data semester")
 def get_semester():
-    dt_semester = dbs.ambil_data_semester(None, None)
+    dt_semester = query.read_datas('semesters')
     result = []
     
     if dt_semester:
@@ -39,20 +40,20 @@ def get_semester():
 #cek dan hapus data sems_courses
 @st.cache_resource(show_spinner="Memvalidasi data semester")
 def check_n_delete_sems_courses():
-    datas = dbsc.check_sems_courses()
+    datas = query.read_datas('sems_courses')
     for data in datas:
         try:
-            if data[1] not in [semester[0] for semester in dbs.ambil_data_semester(None, None)]:
-                dbsc.hapus_sems_courses("id_semester", data[1])
-            if data[2] not in [matkul[0] for matkul in dbm.check_matkul(None, None)]:
-                dbsc.hapus_sems_courses("id_matkul", data[2])
+            if data[1] not in [semester[0] for semester in query.read_datas('semesters')]:
+                query.delete_data('sems_courses', f'id_semester = {data[1]}')
+            if data[2] not in [matkul[0] for matkul in query.read_datas('courses')]:
+                query.delete_data('sems_courses', f'id_matkul = {data[2]}')
         except:
-            dbsc.hapus_sems_courses("id_semester", data[1])
-            dbsc.hapus_sems_courses("id_matkul", data[2])
+            query.delete_data('sems_courses', f'id_semester = {data[1]}')
+            query.delete_data('sems_courses', f'id_matkul = {data[2]}')
 
     
 def tampil_matkul():
-    list_matkul = dbm.ambil_matkul()
+    list_matkul = query.read_datas('courses')
     if list_matkul:
         matkul = [f'{data[1]} - {data[2]}' for data in list_matkul]
     else:
@@ -61,40 +62,40 @@ def tampil_matkul():
 
 
 def tambah_semester(id_sems, semester, tahun, sks):
-    if not dbs.ambil_data_semester(semester, tahun):
+    if not query.read_datas('semesters', None, 'semester_ke=? AND tahun_ajaran=?', [semester, tahun]):
         if not id_sems:
             try:
-                sems = dbs.ambil_data_semester(None, None)
+                sems = query.read_datas('semesters')
                 id_sems = max(sems, key=lambda x: x[0])[0] + 1
             except:
                 id_sems = 1
         values = [id_sems, semester, tahun, sks]
-        dbs.tambah_data_semester(values)
+        query.create_data('semesters', ['id', 'semester_ke', 'tahun_ajaran', 'total_sks'], values)
         return True
     return False
 
 
 def tambah_sems_courses(matkuls, semester, tahun_ajaran, imp=False):
-    id_semester = dbs.ambil_data_semester(semester, tahun_ajaran)[0][0]
+    id_semester = query.read_datas('semesters', ['id'], 'semester_ke=? AND tahun_ajaran=?', [semester, tahun_ajaran])[0][0]
     if imp:
         if not matkuls == 'Belum diatur':
             array_matkul = matkuls.split(", ")
             for m in array_matkul:
-                id_matkul = dbm.check_matkul(m, None)[0][0]
+                id_matkul = query.read_datas('courses', ['id'], f'unique_id={m}')[0][0]
                 values = [id_semester, id_matkul]
-                dbsc.tambah_sems_courses(values)
+                query.create_data('sems_courses', ["id_semester", "id_matkul"], values)
         return
     for i in range(0, len(matkuls)):
         kode, nama = matkuls[i].split(" - ")
-        id_matkul = dbm.check_matkul(kode, nama)[0][0]
+        id_matkul = query.read_datas('courses', ['id'], 'unique_id=? AND nama_matkul=?', [kode, nama])[0][0]
         values = [id_semester, id_matkul]
-        dbsc.tambah_sems_courses(values)
+        query.create_data('sems_courses', ["id_semester", "id_matkul"], values)
 
 
 # Tambah data dari tabel
 def simpan_data(table, conn, keys, data_iter):
     # drop table terkait
-    dbu.restart_table('semesters')
+    st_pages.restart_table('semesters')
     data = [dict(zip(keys, row)) for row in data_iter]
 
     for x in data:
@@ -195,7 +196,7 @@ def reset_session():
 
 
 def inside_tab3():
-    semesters = dbs.ambil_data_semester(None, None)
+    semesters = query.read_datas('semesters')
     matkul = tampil_matkul()
 
     list_sems = [f'{sems[1]}, {sems[2]}' for sems in semesters] if semesters else ['Belum ada data']
@@ -250,7 +251,7 @@ def inside_tab3():
 
         if submit_btn2:
             if not st.session_state['id_semester'] == '':
-                dbsc.hapus_sems_courses('id_semester', st.session_state['id_semester'])
+                query.delete_data('sems_courses', 'id_semester = ?', [st.session_state['id_semester']])
                 tambah_sems_courses(
                     list_matkul, 
                     st.session_state['semester_ke'], 

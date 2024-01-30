@@ -4,17 +4,13 @@ import pandas as pd
 
 from methods import st_pages, dbhelper
 
-
 st_pages.clean_view()
 st_pages.create_database()
 
 @st.cache_data
 def check_login(usern, passw):
-    dbh = dbhelper.DB_Umum()
-    dbh.table_name="users"
-    dbh.condition="username=? AND password=?"
-    dbh.values=[usern, passw]
-    exist = dbh.read_data()
+    query = dbhelper.Query()
+    exist = query.read_datas('users', None, 'username = ? AND password = ?', [usern, passw])
     if exist:
         return True
     return False

@@ -7,22 +7,20 @@ from methods import st_pages, dbhelper
 
 st_pages.clean_view()
 db = database.Database()
-dbu = dbhelper.DB_Umum()
-dbr = dbhelper.DB_Ruang()
-
+query = dbhelper.Query()
 
 # Menambahkan data ruangan jika data ruangan dengan nisn dan max_siswa yang sama belum ada
 def add_ruangan(id_ruang, nama_ruang, max_siswa):
-    if not dbr.check_ruang(nama_ruang, max_siswa):
+    if not query.read_datas('rooms', None, 'nama_ruang=? AND max_siswa=?', [nama_ruang, max_siswa]):
         if not id_ruang:
             try:
-                ruangs = dbr.check_ruang(None, None)
+                ruangs = query.read_datas('rooms')
                 id_ruang = max(ruangs, key=lambda x: x[0])[0] + 1
             except:
                 id_ruang = 1
         fields = ['id', 'nama_ruang', 'max_siswa']
         values = [id_ruang, nama_ruang, max_siswa]
-        dbr.tambah_ruang(fields, values)
+        query.create_data('rooms', fields, values)
         return True
     return False
 
@@ -30,7 +28,7 @@ def add_ruangan(id_ruang, nama_ruang, max_siswa):
 # Mengambil data seluruh ruangan
 @st.cache_resource(show_spinner="Memuat data ruang kelas")
 def get_ruangan():
-    ruangs = dbr.check_ruang(None, None)
+    ruangs = query.read_datas('rooms')
     result = []
     if ruangs:
         for ruangan in ruangs:
@@ -44,7 +42,7 @@ def get_ruangan():
 # Tambah data dari tabel
 def simpan_data(table, conn, keys, data_iter):
     # drop table terkait
-    dbu.restart_table('rooms')
+    st_pages.restart_table('rooms')
     data = [dict(zip(keys, row)) for row in data_iter]
 
     for x in data:

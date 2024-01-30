@@ -7,7 +7,6 @@ from . import dbhelper as dbh
 from datas import database as dbs
 
 db = dbs.Database()
-dbu = dbh.DB_Umum()
 
 def clean_view():
     st.set_page_config(
@@ -25,6 +24,12 @@ def clean_view():
 @st.cache_data
 def create_database():
     db = dbs.Database()
+    db.create_tables()
+
+
+def restart_table(table_name):
+    db = dbs.Database()
+    db.drop_table(table_name)
     db.create_tables()
 
 
@@ -98,3 +103,12 @@ def is_number(values:list, variable:list):
         return False
     return True
 
+
+def get_unique_id(hari, kode):
+    if hari:
+        i = len(hari)
+        unique_id = kode + str(i + 1)
+        return unique_id
+
+    unique_id = kode + str(1)
+    return unique_id

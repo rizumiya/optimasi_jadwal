@@ -1,13 +1,12 @@
 import streamlit as st
 import time
 
-
 from methods import st_pages, dbhelper
 from algorithm.normalize import *
-from algorithm.generate import run, Data
+from algorithm.generate import jalankan, Data
 
 st_pages.clean_view()
-dbs = dbhelper.DB_Semester()
+query = dbhelper.Query()
 
 
 def tampil_hasil():
@@ -48,7 +47,7 @@ def main():
         st.caption('Contoh : Senin, Selasa, dst. **Bukan** Selasa, Senin, dst.')
 
         cols = st.columns([1, 1])
-        semesters = dbs.ambil_data_semester(None, None)
+        semesters = query.read_datas('semesters')
         list_sems = [f'{sems[1]}, {sems[2]}' for sems in semesters] if semesters else ['Belum ada data']
 
         with cols[0]:
@@ -71,7 +70,7 @@ def main():
                     id_semester = query.read_datas('semesters', None, 'semester_ke=? AND tahun_ajaran=?', [semester, tahun_ajaran])[0]
                     try:
                         start_time = time.time()
-                        run_optimizer = run(Data(id_semester[0]))
+                        run_optimizer = jalankan(Data(id_semester[0]))
                         if  run_optimizer[0] == 'OK':
                             text = tampil_hasil()
                         end_time = time.time()
@@ -85,6 +84,7 @@ def main():
                             
                     except Exception as e:
                         st.error('Pastikan seluruh data benar!', icon="🚨")
+                        st.caption('hint: cek mata kuliah yang belum memiliki dosen pengampu')
                         raise e
                 else:
                     st.error('Jangan buang-buang waktu ku..', icon="🚨")

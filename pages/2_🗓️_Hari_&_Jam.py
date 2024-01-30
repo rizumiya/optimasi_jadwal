@@ -7,24 +7,23 @@ from methods import st_pages, dbhelper
 
 st_pages.clean_view()
 db = database.Database()
-dbu = dbhelper.DB_Umum()
-dbw = dbhelper.DB_Hari()
+query = dbhelper.Query()
 
 
 # Menambahkan data hari_jam jika data hari_jam dengan nama_hari dan waktu_kuliah yang sama belum ada
 def add_hari_jam(id_waktu, nama_hari, waktu_kuliah, durasi):
-    if not dbw.check_hari_jam(nama_hari, waktu_kuliah):
+    if not query.read_datas('daytimes', None, 'nama_hari=? AND waktu_kuliah=?', [nama_hari, waktu_kuliah]):
         if not id_waktu:
             try:
-                waktus = dbw.check_hari_jam(None, None)
+                waktus = query.read_datas('daytimes')
                 id_waktu = max(waktus, key=lambda x: x[0])[0] + 1
             except:
                 id_waktu = 1
         kode = nama_hari[:3].upper()
-        unique_id = dbw.get_unique_id(nama_hari, kode)
+        unique_id = st_pages.get_unique_id(query.read_datas('daytimes', None, 'nama_hari=?', [nama_hari]), kode)
         fields = ["id", "unique_id", "nama_hari", "waktu_kuliah", "durasi_jam"]
         values = [id_waktu, unique_id, nama_hari, waktu_kuliah, durasi]
-        dbw.tambah_hari(fields, values)
+        query.create_data('daytimes', fields, values)
         return True
     return False
 
@@ -32,7 +31,7 @@ def add_hari_jam(id_waktu, nama_hari, waktu_kuliah, durasi):
 # Mengambil data seluruh hari_jam
 @st.cache_resource(show_spinner="Memuat data waktu pertemuan")
 def get_hari_jam():
-    hari_jams = dbw.check_hari_jam(None, None)
+    hari_jams = query.read_datas('daytimes')
     result = []
     
     if hari_jams:
@@ -47,7 +46,7 @@ def get_hari_jam():
 # Tambah data dari tabel
 def simpan_data(table, conn, keys, data_iter):
     # drop table terkait
-    dbu.restart_table('daytimes')
+    st_pages.restart_table('daytimes')
     data = [dict(zip(keys, row)) for row in data_iter]
 
     for x in data:
