@@ -1,33 +1,67 @@
-id,unique_id,nama_matkul,metode,sks,perkiraan_peserta,kelas
-1,211810230,Dasar Pemrograman,Offline,3,450,10
-2,211810331,Dasar Sistem Komputer,Offline,2,450,10
-3,211810431,Kalkulus Informatika,Offline,3,450,10
-4,211810531,Logika Informatika,Offline,3,450,10
-5,211810630,Manajemen Data dan Informasi,Offline,2,450,10
-6,211810811,Praktikum Dasar Pemrograman,Offline,2,450,10
-7,211830341,Basis Data,Offline,3,450,10
-8,211830431,Pemrograman Berorientasi Objek,Offline,2,450,10
-9,211830531,Sistem Operasi,Online,2,450,10
-10,211830641,Statistika Informatika,Offline,3,450,10
-11,211830731,Struktur Data,Offline,2,450,10
-12,211850531,Forensik Digital,Offline,2,150,4
-13,211850631,Grafika Terapan,Offline,2,150,4
-14,211850131,Keamanan Komputer,Online,3,450,10
-15,211851131,Pembelajar Mesin,Offline,2,200,5
-16,211850231,Pemrograman Mobile,Online,2,450,10
-17,211850731,Pemrograman Web Dinamis,Offline,3,150,4
-18,211850831,Penambangan Data/Data Mining,Offline,3,150,4
-19,211850320,Pengantar Manajemen dan Prinsip Proyek,Online,3,450,10
-20,211851231,Pengolahan Citra,Offline,2,150,4
-21,211850931,Penjaminan Kualitas Perangkat Lunak,Offline,3,50,2
-22,211851331,Robotika Informatika,Offline,2,50,2
-23,211851431,Sistem Pendukung Keputusan,Offline,3,100,3
-24,211851531,Sistem Temu Balik Informasi,Offline,2,100,3
-25,211851031,Teknik Optimasi,Offline,3,50,2
-26,211850420,Teori Bahasa Otomata,Online,2,450,10
-27,211860120,Manajemen Proyek Teknologi Informasi,Online,2,20,1
-28,211860220,Metodologi Penelitian,Online,3,450,10
-29,211870320,Kewirausahaan,Online,3,200,5
-30,211870630,Praktek Magang,Online,2,200,5
-31,211870720,Sosio Informatika,Online,3,200,5
-32,211880260,Skripsi,Online,0,450,1
+id,unique_id,nama_matkul,metode,sks,perkiraan_peserta,kelas,jenis_matkul
+1,211810230,Dasar Pemrograman,Offline,3,400,9,Reguler
+2,211810331,Dasar Sistem Komputer,Offline,3,400,9,Reguler
+3,211810430,Kalkulus Informatika,Offline,3,400,9,Reguler
+4,211810531,Logika Informatika,Offline,3,400,9,Reguler
+5,211810630,Manajemen Data dan Informasi,Offline,3,400,9,Reguler
+6,211810720,Pancasila,Offline,2,400,9,Reguler
+7,211810811,Praktikum Dasar Pemrograman,Offline,1,400,9,Reguler
+8,211820230,Algoritma Pemrograman,Offline,3,500,11,Reguler
+9,211820320,Aljabar Linear Matrik,Offline,2,500,11,Reguler
+10,211820430,Arsitektur Komputer,Offline,3,500,11,Reguler
+11,211820520,Bahasa Indonesia,Online,2,400,9,Reguler
+12,211820631,Matematika Diskrit,Offline,3,500,11,Reguler
+13,211820731,Pemrograman Web,Offline,3,500,11,Reguler
+14,211820820,Pendidikan Kewarganegaraan,Offline,2,500,11,Reguler
+15,211820911,Praktikum Algoritma Pemrograman,Offline,1,500,11,Reguler
+16,211830220,Bahasa Inggris,Offline,2,430,9,Reguler
+17,211830341,Basis Data,Offline,4,430,9,Reguler
+18,211830431,Pemrograman Berorientasi Objek,Offline,3,430,9,Reguler
+19,211830531,Sistem Operasi,Online,3,430,9,Reguler
+20,211830641,Statistika Informatika,Offline,4,430,9,Reguler
+21,211830731,Struktur Data,Offline,3,430,9,Reguler
+22,211840131,Analisis dan Perancangan Perangkat Lunak,Offline,3,500,11,Reguler
+23,211840231,Grafika Komputer,Offline,3,500,11,Reguler
+24,211840330,Interaksi Manusia dan Komputer,Offline,3,500,11,Reguler
+25,211840531,Kecerdasan Buatan,Offline,3,500,11,Reguler
+26,211840630,Komunikasi Data dan Jaringan Komputer,Offline,3,500,11,Reguler
+27,211840711,Praktikum Komunikasi Data dan Jaringan Komputer,Offline,1,500,11,Reguler
+28,211840831,Strategi Algoritma,Offline,3,500,11,Reguler
+29,211850131,Keamanan Komputer,Online,3,400,9,Reguler
+30,211850331,Pemrograman Mobile,Online,3,400,9,Reguler
+31,211850420,Pengantar Manajemen dan Prinsip Proyek,Online,2,400,9,Reguler
+32,211850520,Teori Bahasa Otomata,Online,2,400,9,Reguler
+33,211850531,Forensik Digital,Offline,3,240,5,Pilihan
+34,211850631,Grafika terapan,Offline,3,240,5,Pilihan
+35,211850731,Pemrograman Web Dinamis,Offline,3,240,5,Pilihan
+36,211850831,Penambangan Data/Data mining,Offline,3,240,5,Pilihan
+37,211850930,Penjaminan Kualitas Perangkat Lunak,Offline,3,240,5,Pilihan
+38,211851031,Teknik Optimasi,Offline,3,240,5,Pilihan
+39,211851131,Pembelajaran Mesin,Offline,3,240,5,Pilihan
+40,211851231,Pengolahan Citra,Offline,3,240,5,Pilihan
+41,211851331,Robotika Informatika,Offline,3,240,5,Pilihan
+42,211851431,Sistem Pendukung Keputusan,Offline,3,240,5,Pilihan
+43,211851531,Sistem Temu Balik Informasi,Offline,3,240,5,Pilihan
+44,211860120,Manajemen Proyek Teknologi Informasi,Online,2,300,7,Reguler
+45,211860220,Metodologi Penelitian,Online,2,420,9,Reguler
+46,211860330,Rekayasa Perangkat Lunak,Offline,3,500,11,Reguler
+47,211860431,Teknologi Multimedia,Online,3,500,11,Reguler
+48,211860531,Keamanan Informasi,Online,3,240,5,Pilihan
+49,211860631,Kriptografi,Offline,3,240,5,Pilihan
+50,211860731,Rekayasa Web,Offline,3,300,7,Pilihan
+51,211860931,Sistem terdistribusi,Online,3,40,1,Pilihan
+52,211861031,Visualisasi Data,Online,3,240,5,Pilihan
+53,211861131,Deep learning,Offline,3,240,5,Pilihan
+54,211861231,Pemrosesan Bahasa Alami,Online,3,240,5,Pilihan
+55,211861331,Pengembangan Aplikasi Game,Offline,3,240,5,Pilihan
+56,211861431,Pengenalan Pola,Online,3,240,5,Pilihan
+57,211861531,Penglihatan Komputer,Online,3,180,4,Pilihan
+58,211860831,Sistem Informasi Geografis,Offline,3,180,4,Pilihan
+59,211870120,Bahasa Inggris Profesional,Online,2,400,9,Reguler
+60,211870320,Kapita Selekta,Online,2,500,11,Reguler
+61,211870440,Kewirausahaan,Online,2,400,9,Reguler
+62,211870520,KKN,Online,4,300,1,Reguler
+63,211870630,Komunikasi Interpersonal,Online,2,500,11,Reguler
+64,211870720,Praktek Magang,Online,2,200,5,Reguler
+65,211870820,Sosio Informatika,Online,2,400,9,Reguler
+66,211880260,Skripsi,Online,0,450,1,Reguler
