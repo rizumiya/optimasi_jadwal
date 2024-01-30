@@ -5,11 +5,11 @@ import openpyxl as xl
 from .normalize import *
 from .export_excel import PY_XL
 
-UKURAN_POPULASI = 30 #15 #30
-JUMLAH_JADWAL_ELIT = 3 #1 #4
-UKURAN_SELEKSI_TURNAMEN = 8 #3 #10
+UKURAN_POPULASI = 40 #15 #30
+JUMLAH_JADWAL_ELIT = 5 #1 #4
+UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
 TINGKAT_MUTASI = 0.1
-MAX_PERULANGAN = 100
+MAX_PERULANGAN = 10000
 JADWAL_PAGI = ("1", "2")
 
 class Data:
@@ -254,6 +254,7 @@ class Jadwal:
                                 break
                             
                             if (classes[i].ambil_detail_ruangan() == classes[j].ambil_detail_ruangan() and 
+                                classes[i].ambil_detail_ruangan().ambil_nomor().lower() != 'online' and
                                 not ruangan_bentrok):
                                 ruangan_bentrok = True
                                 self._jumlah_konflik += 1
@@ -627,7 +628,7 @@ class DisplayMgr:
                  schedules[i].ambil_jumlahKonflik(), 
                  schedules[i]])
             fittest.append(round(schedules[i].ambil_fitnes(), 3))
-        print(table1)
+        # print(table1)
         return max(fittest)
 
     def cetak_jadwal_sebagai_table(self, schedule):
@@ -650,7 +651,7 @@ class DisplayMgr:
                  (', ').join(waktu),
                  classes[i].ambil_detail_ruangan().ambil_nomor()
                  ])
-        print(table)
+        # print(table)
         return table
 
 
@@ -757,30 +758,34 @@ def jalankan(nilai_data):
     displayMgr = DisplayMgr()
     # displayMgr.cetak_seluruh_data()
     generationNumber = 0
-    print("\n> Generation # " + str(generationNumber))
-    populasi = Populasi(UKURAN_POPULASI)
-    populasi.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
-    nilai_fitnes = displayMgr.cetak_generasi(populasi)
-    # it will print fittest generation of schedule
-    hasil = displayMgr.cetak_jadwal_sebagai_table(populasi.ambil_seluruh_jadwal()[0])
-    geneticAlgorithm = AlgoritmaGenetika()
-    while (populasi.ambil_seluruh_jadwal()[0].ambil_fitnes() != 1.0):
-        generationNumber += 1
-        # print("\n> Generation # " + str(generationNumber))
-        populasi = geneticAlgorithm.evolve(populasi)
+    # print("\n> Generation # " + str(generationNumber))
+    try:
+        populasi = Populasi(UKURAN_POPULASI)
         populasi.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
-        nilai_fitnes_2 = displayMgr.cetak_generasi(populasi)
+        nilai_fitnes = displayMgr.cetak_generasi(populasi)
+        # it will print fittest generation of schedule
         hasil = displayMgr.cetak_jadwal_sebagai_table(populasi.ambil_seluruh_jadwal()[0])
-        if nilai_fitnes == nilai_fitnes_2 and banyak_iterasi < MAX_PERULANGAN:
-            banyak_iterasi += 1
-        elif nilai_fitnes != nilai_fitnes_2:
-            nilai_fitnes = nilai_fitnes_2
-            banyak_iterasi = 0
-        else:
+        geneticAlgorithm = AlgoritmaGenetika()
+        while (populasi.ambil_seluruh_jadwal()[0].ambil_fitnes() != 1.0):
+            generationNumber += 1
+            # print("\n> Generation # " + str(generationNumber))
+            populasi = geneticAlgorithm.evolve(populasi)
+            populasi.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
+            nilai_fitnes_2 = displayMgr.cetak_generasi(populasi)
+            hasil = displayMgr.cetak_jadwal_sebagai_table(populasi.ambil_seluruh_jadwal()[0])
+            if nilai_fitnes == nilai_fitnes_2 and banyak_iterasi < MAX_PERULANGAN:
+                banyak_iterasi += 1
+            elif nilai_fitnes != nilai_fitnes_2:
+                nilai_fitnes = nilai_fitnes_2
+                banyak_iterasi = 0
+            else:
+                cetak_ke_txt(hasil)
+                export_ke_excel(data.ambil_semester()[-1].ambil_nama(), populasi.ambil_seluruh_jadwal()[0])
+                exported = True
+                break
+        if not exported:
+            cetak_ke_txt(hasil)
             export_ke_excel(data.ambil_semester()[-1].ambil_nama(), populasi.ambil_seluruh_jadwal()[0])
-            exported = True
-            break
-    cetak_ke_txt(hasil)
-    if not exported:
-        export_ke_excel(data.ambil_semester()[-1].ambil_nama(), populasi.ambil_seluruh_jadwal()[0])
-    return 'OK', f'{nilai_fitnes}, dan konflik : {int((1 / nilai_fitnes) - 1)}'
+        return 'OK', f'{nilai_fitnes}, dan konflik : {int((1 / nilai_fitnes) - 1)}'
+    except:
+        return 'Terjadi masalah saat mengexport sebagai excel', f'{nilai_fitnes}, dan konflik : {int((1 / nilai_fitnes) - 1)}'
