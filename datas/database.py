@@ -49,7 +49,8 @@ class Database:
                             metode text null,
                             sks integer null,
                             perkiraan_peserta integer null,
-                            kelas integer null
+                            kelas integer null,
+                            jenis_matkul text null
                         )''')
         
         # prof has many courses and otherwise

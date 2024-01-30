@@ -95,4 +95,52 @@ def table_semester_to_list(id):
     return semester, list_semester
 
 
+# SKS yang dilarang
+waktu_sakral_4 = ("4", "5", "6", "7", "8", "9", "10", "11", "12") # 
+waktu_sakral_3 = ("5", "6", "8", "9", "11", "12") # 
+waktu_sakral_2 = ("6", "9", "12") # 
+
+
+# Matkul khusus teori + praktik
+matkul_3_sks_2_teori = [
+    "sistem operasi",
+    "logika informatika",
+    "dasar sistem komputer",
+    "struktur data",
+    "keamanan komputer",
+    "pemrograman mobile",
+    "forensik digital",
+    "pemrograman web dinamis",
+    "data mining",
+    "penjaminan kualitas perangkat lunak",
+    "robotika informatika",
+    "teknik optimasi",
+    "grafika terapan",
+    "pembelajaran mesin",
+    "pengolahan citra",
+    "sistem pendukung keputusan",
+    "sistem temu balik informasi",
+    "pemrograman berorentiasi objek",
+    "artitektur komputer",
+    "matematika diskrit",
+    "pemrograman web",
+    "grafika komputer",
+    "analisis dan perancangan perangkat lunak",
+    "strategi algoritma",
+    "kecerdasan buatan",
+    "interaksi manusia dan komputer",
+    "teknologi multimedia",
+    "keamanan informasi",
+    "kriptografi",
+    "rekayasa web",
+    "sistem informasi geografis",
+    "visualisasi data",
+    "deep learning",
+    "pemrosesan bahasa alami",
+    "pengembangan aplikasi game",
+    "pengenalan pola",
+    "penglihatan komputer",
+    "sister terdistribusi"
+]
+
 

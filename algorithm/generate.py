@@ -1,15 +1,16 @@
 import prettytable as prettytable
 import random as rnd
+import openpyxl as xl
 
 from .normalize import *
-from methods.dbhelper import Query
+from .export_excel import PY_XL
 
-query = Query()
-POPULATION_SIZE = 15
-NUMB_OF_ELITE_SCHEDULES = 1
-TOURNAMENT_SELECTION_SIZE = 3
-MUTATION_RATE = 0.1
-
+UKURAN_POPULASI = 30 #15 #30
+JUMLAH_JADWAL_ELIT = 3 #1 #4
+UKURAN_SELEKSI_TURNAMEN = 8 #3 #10
+TINGKAT_MUTASI = 0.1
+MAX_PERULANGAN = 100
+JADWAL_PAGI = ("1", "2")
 
 class Data:
     def __init__(self, id_semester):
@@ -21,13 +22,13 @@ class Data:
 
         self._rooms = []
         self._meetingTimes = []
-        self._instructors = []
+        self._dosen = []
         self._courses = []
         for i in range(0, len(self.ROOMS)):
-            self._rooms.append(Room(self.ROOMS[i][0], self.ROOMS[i][1]))
+            self._rooms.append(RuangKelas(self.ROOMS[i][0], self.ROOMS[i][1]))
 
         for i in range(0, len(self.MEETING_TIMES)):
-            self._meetingTimes.append(MeetingTime(
+            self._meetingTimes.append(WaktuPertemuan(
                 self.MEETING_TIMES[i][0], self.MEETING_TIMES[i][1], self.MEETING_TIMES[i][2]))
 
         self._no_time = []
@@ -36,7 +37,7 @@ class Data:
                 for j in range(0, len(self.MEETING_TIMES)):
                     if ut_dosen == self.MEETING_TIMES[j][0]:
                         self._no_time.append(self._meetingTimes[j])
-            self._instructors.append(Instructor(
+            self._dosen.append(Dosen(
                 self.INSTRUCTORS[i][0], self.INSTRUCTORS[i][1], self._no_time, self.KELAS_DOSEN[i]))
             self._no_time = []
 
@@ -46,9 +47,9 @@ class Data:
             for dosen in self.DOSEN[i]:
                 for k in range(0, len(self.INSTRUCTORS)):
                     if dosen[0] == self.INSTRUCTORS[k][0]:
-                        self._l_dosen.append(self._instructors[k])
-            self._courses.append(Course(
-                self.KODEMAT[i], self.NAMAKUL[i], self._l_dosen, 50, self.ROW[i][3], self.ROW[i][4], self.ROW[i][6]))
+                        self._l_dosen.append(self._dosen[k])
+            self._courses.append(MataKuliah(
+                self.KODEMAT[i], self.NAMAKUL[i], self._l_dosen, 50, self.ROW[i][3], self.ROW[i][4], self.ROW[i][6], self.ROW[i][7]))
             self._l_dosen = []
 
         self._semesters = []  # gantinya self._depts
@@ -65,21 +66,21 @@ class Data:
         self._numberOfClasses = 0
 
         for i in range(0, len(self._semesters)):
-            self._numberOfClasses += len(self._semesters[i].get_courses())
+            self._numberOfClasses += len(self._semesters[i].ambil_mata_kuliah())
 
-    def get_rooms(self):
+    def ambil_ruangan(self):
         return self._rooms
 
-    def get_instructors(self):
-        return self._instructors
+    def ambil_dosen(self):
+        return self._dosen
 
-    def get_courses(self):
+    def ambil_mata_kuliah(self):
         return self._courses
 
-    def get_depts(self):
+    def ambil_semester(self):
         return self._semesters
 
-    def get_meetingTimes(self):
+    def ambil_waktu_pertemuan(self):
         return self._meetingTimes
 
     def get_numberOfClasses(self):
@@ -88,460 +89,568 @@ class Data:
 # Pengaturan untuk algoritma genetika
 
 
-class Schedule:
+class Jadwal:
     def __init__(self):
         self._data = data
-        self._classes = []
-        self._numberOfConflicts = 0
+        self._kelas = []
+        self._jumlah_konflik = 0
         self._fitness = -1
-        self._classNumb = 0
-        self._isFitnessChanged = True
+        self._nomorClass = 0
+        self._fitnessBerubah = True
 
-    def get_classes(self):
-        self._isFitnessChanged = True
-        return self._classes
+    def ambil_kelas(self):
+        self._fitnessBerubah = True
+        return self._kelas
 
-    def get_numberOfConflicts(self):
-        return self._numberOfConflicts
+    def ambil_jumlahKonflik(self):
+        return self._jumlah_konflik
 
-    def get_fitness(self):
-        if (self._isFitnessChanged == True):
-            self._fitness = self.calculate_fitness()
-            self._isFitnessChanged = False
+    def ambil_fitnes(self):
+        if (self._fitnessBerubah == True):
+            self._fitness = self.hitung_fitnes()
+            self._fitnessBerubah = False
         return self._fitness
 
-    def initialize(self):
-        depts = self._data.get_depts()
+    def inisialisasi(self):
+        semester = self._data.ambil_semester()
         # banyak semester yang di generate
-        for i in range(0, len(depts)):
-            courses = depts[i].get_courses()
-            for j in range(0, len(courses)): # banyak matkul di 1 semester
-                kelas = courses[j].get_kelas()
-                for k in range(1, kelas + 1):
-                    # banyak kelas yang di 1 matkul
-                    letter = chr(k + 64)
-                    newClass = Class(
-                        self._classNumb, depts[i], courses[j], letter)
-                    self._classNumb += 1
+        for i in range(0, len(semester)):
+            matkul = semester[i].ambil_mata_kuliah()
+            list_waktu_pagi = []
 
-                    # atur waktu
-                    id_waktu = rnd.randrange(0, len(data.get_meetingTimes()))
-                    waktu = data.get_meetingTimes(
-                    )[id_waktu:id_waktu+int(courses[j].get_sks())]
-                    newClass.set_meetingTime(waktu)
+            for j in range(0, len(matkul)): # banyak matkul di 1 semester
+                kelas = matkul[j].ambil_kelas() 
+                pagi = [waktu.ambil_id() for waktu in data.ambil_waktu_pertemuan() if str(waktu.ambil_id()).endswith(JADWAL_PAGI) and len(waktu.ambil_id()) == 4]
+
+                for k in range(1, kelas + 1): # banyak kelas yang di 1 matkul
+                    letter = chr(k + 64)
+                    newClass = Class(self._nomorClass, semester[i], matkul[j], letter)
+                    self._nomorClass += 1
+                    dosen = None
 
                     # atur dosen pengampu kelas
-                    for l in range(0, len(courses[j].get_instructors())):
-                        for m in range(0, len(courses[j].get_instructors()[l].get_kelas())):
-                            id_matk, kls = courses[j].get_instructors()[l].get_kelas()[
-                                m].split(" - ")
-                            if id_matk == courses[j].get_number() and kls == letter:
-                                newClass.set_instructor(
-                                    courses[j].get_instructors()[l])
+                    try:
+                        for l in range(0, len(matkul[j].ambil_dosen())):
+                            for m in range(0, len(matkul[j].ambil_dosen()[l].ambil_kelas())):
+                                id_matk, kls = matkul[j].ambil_dosen()[l].ambil_kelas()[m].split(" - ")
+                                if id_matk == matkul[j].ambil_nomor() and kls == letter:
+                                    newClass.atur_dosen(matkul[j].ambil_dosen()[l])
+                                    dosen = matkul[j].ambil_dosen()[l]
+                                    break
+                            if dosen:
                                 break
+                        if not dosen:
+                            raise ValueError("Tidak ada dosen terpilih")
+                    except:
+                        data_dosen = []
+                        for l in range(0, len(matkul[j].ambil_dosen())):
+                            id_dosen = matkul[j].ambil_dosen()[l].ambil_id()
+                            for dosen in data.ambil_dosen():
+                                if dosen.ambil_id() == id_dosen:    
+                                    data_dosen.append(dosen)
+
+                        id_dosen = rnd.randrange(0, len(data_dosen))
+                        dosen = data_dosen[id_dosen]
+                        newClass.atur_dosen(dosen)
+
+                    # atur waktu
+                    waktu_pagi = [[item.ambil_id() for item in data.ambil_waktu_pertemuan()].index(jam_pagi) for jam_pagi in pagi]    
+                    tot_sks = matkul[j].ambil_sks()
+                    while True:
+                        id_waktu = rnd.randrange(0, len(data.ambil_waktu_pertemuan()))
+                        if int(matkul[j].ambil_sks()) > 1:
+                            if int(matkul[j].ambil_sks()) >= 3 and matkul[j].ambil_nama().lower() not in matkul_3_sks_2_teori:
+                                waktu = data.ambil_waktu_pertemuan()[id_waktu:id_waktu + 3]
+                            else:
+                                waktu = data.ambil_waktu_pertemuan()[id_waktu:id_waktu + 2]
+                        else:
+                            waktu = [data.ambil_waktu_pertemuan()[id_waktu]]
+
+                        # if waktu[0].ambil_id() in pagi:
+                        #     if list_waktu_pagi:
+                        #         if not any(item['kelas_pagi'] == letter for item in list_waktu_pagi):
+                        #             newClass.atur_waktu_pertemuan(waktu)
+                        #             list_waktu_pagi.append({"kelas_pagi": letter})
+                        #             break
+                        #         continue
+                        #     else:
+                        #         newClass.atur_waktu_pertemuan(waktu)
+                        #         list_waktu_pagi.append({"kelas_pagi": letter})
+                        #         break
+                        # hilangkan komentar bagian ini jika ingin memaksa jam pagi tiap kelas
+                        # elif waktu[0].ambil_id() not in pagi:
+                        #     if not any(item['kelas_pagi'] == letter for item in list_waktu_pagi):
+                        #         id_waktu_pagi = rnd.choice(waktu_pagi)
+                        #         waktu = data.ambil_waktu_pertemuan()[id_waktu_pagi:id_waktu_pagi+int(matkul[j].ambil_sks())]
+                        #         newClass.atur_waktu_pertemuan(waktu)
+                        #         list_waktu_pagi.append({"kelas_pagi": letter})
+                        #         break
+                        # else:
+                        panjang_kode_hari = str(waktu[0].ambil_id()[:3]) # SEN
+                        sks3sakral = [panjang_kode_hari + sakral for sakral in waktu_sakral_3] # SEN5, SEN6, ..
+                        sks2sakral = [panjang_kode_hari + sakral for sakral in waktu_sakral_2] # SEN6, SEN9, ..
+                        if ((tot_sks == 3 or tot_sks == 4) and str(waktu[0].ambil_id()) in sks3sakral):
+                            continue
+                        elif (tot_sks == 2 and str(waktu[0].ambil_id()) in sks2sakral):
+                            continue
+
+                        newClass.atur_waktu_pertemuan(waktu)
+                        break
 
                     # atur ruangan
-                    for n in range(0, len(data.get_rooms())):
-                        if courses[j].get_metode() == 'Online' and courses[j].get_metode() == data.get_rooms()[n].get_number():
-                            newClass.set_room(data.get_rooms()[n])
-                            break
-                        if courses[j].get_metode() == 'Offline':
-                            # karna kelas online ada di data paling bawah
-                            newClass.set_room(
-                                data.get_rooms()[rnd.randrange(0, len(data.get_rooms()) - 1)])
-                            break
-
-                    self._classes.append(newClass)
+                    online_id = [item.ambil_nomor().lower() for item in data.ambil_ruangan()].index("online")
+                    if matkul[j].ambil_metode_belajar().lower() == 'online':
+                        newClass.atur_ruangan(data.ambil_ruangan()[online_id])
+                    else:
+                        while True:
+                            ruangan = rnd.randrange(0, len(data.ambil_ruangan()))
+                            if ruangan != online_id:
+                                newClass.atur_ruangan(data.ambil_ruangan()[ruangan])
+                                break
+                    self._kelas.append(newClass)
         return self
 
     # ATUR KEMUNGKINAN ============================================
-    def calculate_fitness(self):
-        self._numberOfConflicts = 0
-        classes = self.get_classes()
+    def hitung_fitnes(self):
+        self._jumlah_konflik = 0
+        pagi = [waktu.ambil_id() for waktu in data.ambil_waktu_pertemuan() if str(waktu.ambil_id()).endswith(JADWAL_PAGI) and len(waktu.ambil_id()) == 4]
+        list_kelas_pagi = []
+
+        classes = self.ambil_kelas() # ambil semua data hasil acak di inisalisasi
         for i in range(0, len(classes)):
             # buat pengecekan waktu dosen tidak bisa hadir
-            if classes[i].get_instructor().get_no_times():
-                for instructor_time in classes[i].get_instructor().get_no_times():
-                    if any(instructor_time.get_id() == meeting_time.get_id() for meeting_time in classes[i].get_meetingTime()):
-                        self._numberOfConflicts += 1
+            # konflik + 1 apabila terdapat dosen yang memiliki waktu sakral yang sama dengan waktu yang diacak pada jadwal inisialisasi
+            if classes[i].ambil_detail_dosen().ambil_waktu_sakral():
+                for instructor_time in classes[i].ambil_detail_dosen().ambil_waktu_sakral():
+                    if any(instructor_time.ambil_id() == meeting_time.ambil_id() for meeting_time in classes[i].ambil_detail_waktu_pertemuan()):
+                        self._jumlah_konflik += 1
                         break
 
-            # buat pengecekan jika metode online, tapi gak dapet online konflik +=1 dan sebaliknya
-            if classes[i].get_course().get_metode() == 'Online' and classes[i].get_room().get_number() != 'Online':
-                self._numberOfConflicts += 1
-            if classes[i].get_course().get_metode() == 'Offline' and classes[i].get_room().get_number() == 'Online':
-                self._numberOfConflicts += 1
+            # buat pengecekan jika metode online, tapi gak dapet kelas online konflik + 1 dan sebaliknya
+            # if (classes[i].ambil_detail_mata_kuliah().ambil_metode_belajar().lower() == 'online' and 
+            #     classes[i].ambil_detail_ruangan().ambil_nomor().lower() != 'online'):
+            #     self._jumlah_konflik += 1
+            # if classes[i].ambil_detail_mata_kuliah().ambil_metode_belajar().lower() == 'offline':
+            #     if classes[i].ambil_detail_ruangan().ambil_nomor().lower() == 'online':
+            #         self._jumlah_konflik += 1
 
-            # buat pengecekan jika waktu = sks
-            waktu_sakral = ['SEN11', 'SEN12', 'SEL11', 'SEL12', 'RAB11', 'RAB12',
-                            'KAM11', 'KAM12', 'JUM11', 'JUM12', 'SAB11', 'SAB12']
-            if int(classes[i].get_course().get_sks()) == 3 and any(time.get_id() in waktu_sakral for time in classes[i].get_meetingTime()):
-                self._numberOfConflicts += 1
-            waktu_sakral_sks2 = ['SEN12', 'SEL12',
-                                 'RAB12', 'KAM12', 'JUM12', 'SAB12']
-            if int(classes[i].get_course().get_sks()) == 2 and any(time.get_id() in waktu_sakral_sks2 for time in classes[i].get_meetingTime()):
-                self._numberOfConflicts += 1
-
+            # buat pengecekan antar jadwal 1 dengan yang lainnya
+            panjang_kode_hari = str(classes[i].ambil_detail_waktu_pertemuan()[0].ambil_id()[:3]) # SEN
             for j in range(0, len(classes)):
                 if (j >= i):
-                    for l in range(0, len(classes[j].get_meetingTime())):
-                        if (classes[j].get_meetingTime()[l] in classes[i].get_meetingTime() and
-                           classes[i].get_instructor() == classes[j].get_instructor() and
-                           classes[i].get_id() != classes[j].get_id()):
-                            # print(classes[i].get_course().get_name(), " - ", classes[i].get_instructor().get_name(),  " | ", classes[j].get_course().get_name(), " - ",  classes[j].get_instructor().get_name())
-                            self._numberOfConflicts += 1
-                            break
+                    dosen_bentrok = False # beda matkul tapi -> waktu sama + dosen sama
+                    ruangan_bentrok = False # beda matkul tapi -> waktu sama + ruangan sama
+                    kelas_bentrok = False # sama matkul + waktu sama + ruangan sama (online)
+                    # Intinya bagian ini kalo ada salah satu waktu di 2/3 sks dan dosen pengampu yang sama maka konflik + 1
+                    for l in range(0, len(classes[j].ambil_detail_waktu_pertemuan())):
+                        if (classes[j].ambil_detail_waktu_pertemuan()[l] in classes[i].ambil_detail_waktu_pertemuan() and
+                            classes[i].ambil_id() != classes[j].ambil_id()):
 
-                    if (classes[i].get_meetingTime() == classes[j].get_meetingTime() and
-                       classes[i].get_id() != classes[j].get_id()):
-                        if (classes[i].get_room() == classes[j].get_room() and classes[j].get_room().get_number() != 'Online'):
-                            self._numberOfConflicts += 1
-                        if (classes[i].get_instructor() == classes[j].get_instructor()):
-                            self._numberOfConflicts += 1
-        return 1 / ((1.0*self._numberOfConflicts + 1))
+                            if (classes[i].ambil_detail_dosen() == classes[j].ambil_detail_dosen() and
+                                "dosen" not in classes[i].ambil_detail_dosen().ambil_nama().lower() and
+                                not dosen_bentrok):
+                                dosen_bentrok = True
+                                self._jumlah_konflik += 1
+                                break
+                            
+                            if (classes[i].ambil_detail_ruangan() == classes[j].ambil_detail_ruangan() and 
+                                not ruangan_bentrok):
+                                ruangan_bentrok = True
+                                self._jumlah_konflik += 1
+                                break
+                            
+                            if (classes[i].ambil_kelas() != classes[j].ambil_kelas() and 
+                                classes[i].ambil_detail_mata_kuliah().ambil_nama() == classes[j].ambil_detail_mata_kuliah().ambil_nama() and
+                                not kelas_bentrok):
+                                kelas_bentrok = True
+                                self._jumlah_konflik += 1
+                                break
+                            
+                    if dosen_bentrok or ruangan_bentrok or kelas_bentrok: # and jadi or
+                        break
+
+                    # cek jenis matkul topsus di hari yang sama = konflik + 1
+                    jenis_matkul = classes[i].ambil_detail_mata_kuliah().ambil_jenis_matkul()
+                    if (panjang_kode_hari == str(classes[j].ambil_detail_waktu_pertemuan()[0].ambil_id()[:3]) and
+                        jenis_matkul == classes[j].ambil_detail_mata_kuliah().ambil_jenis_matkul() and jenis_matkul == 'Pilihan' and
+                        classes[i].ambil_detail_mata_kuliah().ambil_nama() != classes[j].ambil_detail_mata_kuliah().ambil_nama() and
+                        classes[i].ambil_id() != classes[j].ambil_id()):
+                        self._jumlah_konflik += 1
+                        break
+
+                    # buat pengecekan dosen yang sama mengampu matkul yang sama jika tidak 1 hari konflik + 1
+                    # memaksa di 1 hari yang sama untuk dosen = matkul yang sama
+                    # if (classes[i].ambil_detail_mata_kuliah() == classes[j].ambil_detail_mata_kuliah() and
+                    #     classes[i].ambil_detail_dosen() == classes[j].ambil_detail_dosen() and 
+                    #     "dosen" not in classes[j].ambil_detail_dosen().ambil_nama().lower() and 
+                    #     not str(classes[i].ambil_detail_waktu_pertemuan()[-1].ambil_id()).startswith(str(classes[j].ambil_detail_waktu_pertemuan()[-1].ambil_id())[:3]) and
+                    #     classes[i].ambil_id() != classes[j].ambil_id()):
+                    #     self._jumlah_konflik += 1
+                    #     break
+
+                    # buat pengecekan dosen yang sama mengampu matkul yang sama dalam ruangan yang sama dalam 1 hari, jika tidak konflik + 1
+                    # memaksa 1 ruangan untuk dosen = matkul = hari yang sama
+                    # if (classes[i].ambil_detail_mata_kuliah() == classes[j].ambil_detail_mata_kuliah() and
+                    #     classes[i].ambil_detail_dosen() == classes[j].ambil_detail_dosen() and 
+                    #     "dosen" not in classes[j].ambil_detail_dosen().ambil_nama().lower() and 
+                    #     classes[i].ambil_detail_ruangan() != classes[j].ambil_detail_ruangan() and
+                    #     str(classes[i].ambil_detail_waktu_pertemuan()[-1].ambil_id()).startswith(str(classes[j].ambil_detail_waktu_pertemuan()[-1].ambil_id())[:3]) and
+                    #     classes[i].ambil_id() != classes[j].ambil_id()):
+                    #     self._jumlah_konflik += 1
+                    #     break
+
+            # buat pengecekan yang sudah dapat kelas pagi, gak boleh dapet kelas pagi lagi
+            if classes[i].ambil_detail_waktu_pertemuan()[0].ambil_id() in pagi:
+                if classes[i].ambil_kelas() in [kelas["kelas"] for kelas in list_kelas_pagi]:
+                    self._jumlah_konflik += 1
+                    continue
+                list_kelas_pagi.append({"kelas": classes[i].ambil_kelas(), "pagi": True})
+
+        return 1 / ((1.0 * self._jumlah_konflik + 1))
 
     def __str__(self):
         # it returns all the classes of schedule separated by comas
         returnValue = ""
-        for i in range(0, len(self._classes) - 1):
-            returnValue += str(self._classes[i]) + ", "
-        returnValue += str(self._classes[len(self._classes) - 1])
+        for i in range(0, len(self._kelas) - 1):
+            returnValue += str(self._kelas[i]) + ", "
+        returnValue += str(self._kelas[len(self._kelas) - 1])
         return returnValue
 
 
-class Population:
+class Populasi:
     def __init__(self, size):
         self._size = size
         self._data = data
         self._schedules = []
         for i in range(0, size):
-            self._schedules.append(Schedule().initialize())
+            self._schedules.append(Jadwal().inisialisasi())
 
-    def get_schedules(self):
+    def ambil_seluruh_jadwal(self):
         return self._schedules
 
 
-class GeneticAlgorithm:
-    def evolve(self, population):
-        return self._mutate_population(self._crossover_population(population))
+class AlgoritmaGenetika:
+    def evolve(self, populasi):
+        return self._mutasi_populasi(self._persilangan_populasi(populasi))
 
-    def _crossover_population(self, pop):
-        crossover_pop = Population(0)
-        for i in range(NUMB_OF_ELITE_SCHEDULES):
-            crossover_pop.get_schedules().append(pop.get_schedules()[i])
-        i = NUMB_OF_ELITE_SCHEDULES
-        while i < POPULATION_SIZE:
-            schedule1 = self._select_tournament_population(pop).get_schedules()[
-                0]
-            schedule2 = self._select_tournament_population(pop).get_schedules()[
-                0]
-            crossover_pop.get_schedules().append(
-                self._crossover_schedule(schedule1, schedule2))
+    def _persilangan_populasi(self, pop):
+        crossover_pop = Populasi(0)
+        for i in range(JUMLAH_JADWAL_ELIT):
+            crossover_pop.ambil_seluruh_jadwal().append(pop.ambil_seluruh_jadwal()[i])
+        i = JUMLAH_JADWAL_ELIT
+        while i < UKURAN_POPULASI:
+            schedule1 = self._pilih_turnamen_populasi(pop).ambil_seluruh_jadwal()[0]
+            schedule2 = self._pilih_turnamen_populasi(pop).ambil_seluruh_jadwal()[0]
+            crossover_pop.ambil_seluruh_jadwal().append(
+                self._persilangan_jadwal(schedule1, schedule2))
             i += 1
         return crossover_pop
 
-    def _mutate_population(self, population):
-        for i in range(NUMB_OF_ELITE_SCHEDULES, POPULATION_SIZE):
-            self._mutate_schedule(population.get_schedules()[i])
-        return population
+    def _mutasi_populasi(self, populasi):
+        for i in range(JUMLAH_JADWAL_ELIT, UKURAN_POPULASI):
+            self._mutasi_jadwal(populasi.ambil_seluruh_jadwal()[i])
+        return populasi
 
-    def _crossover_schedule(self, schedule1, schedule2):
-        crossoverSchedule = Schedule().initialize()
-        for i in range(0, len(crossoverSchedule.get_classes())):
+    def _persilangan_jadwal(self, schedule1, schedule2):
+        crossoverSchedule = Jadwal().inisialisasi()
+        for i in range(0, len(crossoverSchedule.ambil_kelas())):
             if (rnd.random() > 0.5):
-                crossoverSchedule.get_classes()[i] = schedule1.get_classes()[i]
+                crossoverSchedule.ambil_kelas()[i] = schedule1.ambil_kelas()[i]
             else:
-                crossoverSchedule.get_classes()[i] = schedule2.get_classes()[i]
+                crossoverSchedule.ambil_kelas()[i] = schedule2.ambil_kelas()[i]
         return crossoverSchedule
 
-    def _mutate_schedule(self, mutateSchedule):
-        schedule = Schedule().initialize()
-        for i in range(0, len(mutateSchedule.get_classes())):
-            if (MUTATION_RATE > rnd.random()):
-                mutateSchedule.get_classes()[i] = schedule.get_classes()[i]
+    def _mutasi_jadwal(self, mutateSchedule):
+        schedule = Jadwal().inisialisasi()
+        for i in range(0, len(mutateSchedule.ambil_kelas())):
+            if (TINGKAT_MUTASI > rnd.random()):
+                mutateSchedule.ambil_kelas()[i] = schedule.ambil_kelas()[i]
         return mutateSchedule
 
-    def _select_tournament_population(self, pop):
-        tournament_pop = Population(0)
+    def _pilih_turnamen_populasi(self, pop):
+        tournament_pop = Populasi(0)
         i = 0
-        while i < TOURNAMENT_SELECTION_SIZE:
-            tournament_pop.get_schedules().append(
-                pop.get_schedules()[rnd.randrange(0, POPULATION_SIZE)])
+        while i < UKURAN_SELEKSI_TURNAMEN:
+            tournament_pop.ambil_seluruh_jadwal().append(
+                pop.ambil_seluruh_jadwal()[rnd.randrange(0, UKURAN_POPULASI)])
             i += 1
-        tournament_pop.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+        tournament_pop.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
         return tournament_pop
 
 # Pengaturan data untuk optimasi
 
 
-class Course:
-    def __init__(self, number, name, instructors, maxNumbOfStudents, metode, sks, kelas):
-        self._number = number
+class MataKuliah:
+    def __init__(self, number, name, instructors, maxNumbOfStudents, metode, sks, kelas, jenis):
+        self._nomor = number
         self._sks = sks
-        self._name = name
+        self._nama = name
         self._kelas = kelas
         self._metode = metode
-        self._instructors = instructors
-        self._maxNumbOfStudents = maxNumbOfStudents
+        self._dosen = instructors
+        self._total_mahasiswa = maxNumbOfStudents
+        self._jenis_matkul = jenis
 
-    def get_name(self):
-        return self._name
+    def ambil_nama(self):
+        return self._nama
 
-    def get_sks(self):
+    def ambil_sks(self):
         return self._sks
 
-    def get_kelas(self):
+    def ambil_kelas(self):
         return self._kelas
 
-    def get_number(self):
-        return self._number
+    def ambil_nomor(self):
+        return self._nomor
 
-    def get_metode(self):
+    def ambil_metode_belajar(self):
         return self._metode
 
-    def get_instructors(self):
-        return self._instructors
+    def ambil_dosen(self):
+        return self._dosen
 
-    def get_maxNumbOfStudents(self):
-        return self._maxNumbOfStudents
+    def ambil_total_mahasiswa(self):
+        return self._total_mahasiswa
+
+    def ambil_jenis_matkul(self):
+        return self._jenis_matkul
 
     def __str__(self):
-        return self._name
+        return self._nama
 
 
-class MeetingTime:
+class WaktuPertemuan:
     def __init__(self, id, time, durasi=None):
-        self._time = time
+        self._waktu = time
         self._id = id
         self._durasi = durasi
 
-    def get_id(self):
+    def ambil_id(self):
         return self._id
 
-    def get_time(self):
-        return self._time
+    def ambil_waktu(self):
+        return self._waktu
 
-    def get_durasi(self):
+    def ambil_durasi(self):
         return self._durasi
 
     def __str__(self):
         return self._id
 
 
-class Instructor:
+class Dosen:
     def __init__(self, id, name, no_times, kelas):
         self._id = id
-        self._name = name
-        self._no_times = no_times
+        self._nama = name
+        self._waktu_sakral = no_times
         self._kelas = kelas
 
-    def get_id(self):
+    def ambil_id(self):
         return self._id
 
-    def get_name(self):
-        return self._name
+    def ambil_nama(self):
+        return self._nama
 
-    def get_no_times(self):
-        return self._no_times
+    def ambil_waktu_sakral(self):
+        return self._waktu_sakral
 
-    def get_kelas(self):
+    def ambil_kelas(self):
         return self._kelas
 
     def __str__(self):
-        return self._name
+        return self._nama
 
 
-class Room:
+class RuangKelas:
     def __init__(self, number, seatingCapacity):
-        self._number = number
-        self._seatingCapacity = seatingCapacity
+        self._nomor_ruangan = number
+        self._total_kapasitas_mahasiswa = seatingCapacity
 
-    def get_number(self):
-        return self._number
+    def ambil_nomor(self):
+        return self._nomor_ruangan
 
-    def get_seatingCapacity(self):
-        return self._seatingCapacity
+    def ambil_kapasitas_mahasiswa(self):
+        return self._total_kapasitas_mahasiswa
 
     def __str__(self):
-        return self._number
+        return self._nomor_ruangan
 
 
 class Semester:
     # Batch for my case
-    def __init__(self, name, courses):
-        self._name = name
-        self._courses = courses     # Courses that Semester offers
+    def __init__(self, name, matkul):
+        self._nama = name
+        self._courses = matkul     # Courses that Semester offers
 
-    def get_name(self): return self._name
-    def get_courses(self): return self._courses
+    def ambil_nama(self): return self._nama
+    def ambil_mata_kuliah(self): return self._courses
 
 
+# merujuk pada hasil generated jadwal bukan data asli
 class Class:
-    # Course to be scheduled at specific room of department host by an instructor at specific Meeting Time
+    # MataKuliah to be scheduled at specific room of department host by an instructor at specific Meeting Time
     def __init__(self, id, dept, course, kelas):
         self._id = id
-        self._dept = dept
-        self._course = course
+        self._semester = dept
+        self._mata_kuliah = course
         self._kelas = kelas
-        self._instructor = None
-        self._meetingTime = None
-        self._room = None
+        self._dosen = None
+        self._waktu_pertemuan = None
+        self._ruang_kelas = None
 
-    def get_id(self):
+    def ambil_id(self):
         return self._id
 
-    def get_dept(self):
-        return self._dept
+    def ambil_semester(self):
+        return self._semester
 
-    def get_room(self):
-        return self._room
+    def ambil_detail_ruangan(self):
+        return self._ruang_kelas
 
-    def get_course(self):
-        return self._course
+    def ambil_detail_mata_kuliah(self):
+        return self._mata_kuliah
 
-    def get_kelas(self):
+    def ambil_kelas(self):
         return self._kelas
 
-    def get_instructor(self):
-        return self._instructor
+    def ambil_detail_dosen(self):
+        return self._dosen
 
-    def get_meetingTime(self):
-        return self._meetingTime
+    def ambil_detail_waktu_pertemuan(self):
+        return self._waktu_pertemuan
 
-    def set_instructor(self, instructor):
-        self._instructor = instructor
+    def atur_dosen(self, instructor):
+        self._dosen = instructor
 
-    def set_meetingTime(self, meetingTime):
-        self._meetingTime = meetingTime
+    def atur_waktu_pertemuan(self, meetingTime):
+        self._waktu_pertemuan = meetingTime
 
-    def set_room(self, room):
-        self._room = room
+    def atur_ruangan(self, room):
+        self._ruang_kelas = room
 
     def __str__(self):
-        return str(self._dept.get_name()) + ", " + str(self._course.get_number()) + ", " + \
-            str(self._room.get_number()) + ", " + str(self._instructor.get_id()) + ", " + \
+        return str(self._semester.ambil_nama()) + ", " + str(self._mata_kuliah.ambil_nomor()) + ", " + \
+            str(self._ruang_kelas.ambil_nomor()) + ", " + str(self._dosen.ambil_id()) + ", " + \
             str(self._kelas) + ", " + \
-            (', ').join([waktu.get_id() for waktu in self._meetingTime])
+            (', ').join([waktu.ambil_id() for waktu in self._waktu_pertemuan])
+
 
 # Pengaturan untuk tampilan akhir
-
-
 class DisplayMgr:
-    def print_available_data(self):
-        print("> All Available Data")
-        self.print_dept()
-        self.print_course()
-        self.print_room()
-        self.print_instructor()
-        self.print_meeting_times()
+    def cetak_seluruh_data(self):
+        print("> Seluruh Data Tersedia")
+        self.cetak_semester()
+        self.cetak_mata_kuliah()
+        self.cetak_ruang_kelas()
+        self.cetak_dosen()
+        self.cetak_waktu_pertemuan()
 
-    def print_dept(self):
-        depts = data.get_depts()
-        availableDeptsTable = prettytable.PrettyTable(
+    def cetak_semester(self):
+        semester = data.ambil_semester()
+        tableSemesterTersedia = prettytable.PrettyTable(
             ['Semester', 'Mata kuliah'])
-        for i in range(0, len(depts)):
-            courses = depts.__getitem__(i).get_courses()
+        for i in range(0, len(semester)):
+            matkul = semester.__getitem__(i).ambil_mata_kuliah()
             tempStr = ""
-            for j in range(0, len(courses) - 1):
-                tempStr += courses[j].__str__() + "\n"
-            tempStr += courses[len(courses) - 1].__str__() + ""
-            availableDeptsTable.add_row(
-                [depts.__getitem__(i).get_name(), tempStr])
-        print(availableDeptsTable)
+            for j in range(0, len(matkul) - 1):
+                tempStr += matkul[j].__str__() + "\n"
+            tempStr += matkul[len(matkul) - 1].__str__() + ""
+            tableSemesterTersedia.add_row(
+                [semester.__getitem__(i).ambil_nama(), tempStr])
+        print(tableSemesterTersedia)
 
-    def print_course(self):
-        availabelCoursesTable = prettytable.PrettyTable(
+    def cetak_mata_kuliah(self):
+        tableMatkulTersedia = prettytable.PrettyTable(
             ['ID', 'Mata kuliah # ', 'SKS', 'Pelaksanaan', 'Kelas', 'Dosen'])
-        courses = data.get_courses()
-        for i in range(0, len(courses)):
-            instructors = courses[i].get_instructors()
+        matkul = data.ambil_mata_kuliah()
+        for i in range(0, len(matkul)):
+            instructors = matkul[i].ambil_dosen()
             tempStr = ""
             for j in range(0, len(instructors)-1):
                 tempStr += instructors[j].__str__() + ", "
             tempStr += instructors[len(instructors) - 1].__str__()
-            availabelCoursesTable.add_row(
-                [courses[i].get_number(),
-                 courses[i].get_name(),
-                 courses[i].get_sks(),
-                 courses[i].get_metode(),
-                 #  str(courses[i].get_maxNumbOfStudents()),
-                 courses[i].get_kelas(),
+            tableMatkulTersedia.add_row(
+                [matkul[i].ambil_nomor(),
+                 matkul[i].ambil_nama(),
+                 matkul[i].ambil_sks(),
+                 matkul[i].ambil_metode_belajar(),
+                 #  str(matkul[i].ambil_total_mahasiswa()),
+                 matkul[i].ambil_kelas(),
                  tempStr]
             )
-        print(availabelCoursesTable)
+        print(tableMatkulTersedia)
 
-    def print_instructor(self):
-        availableInstructorsTable = prettytable.PrettyTable(
+    def cetak_dosen(self):
+        tableDosenTersedia = prettytable.PrettyTable(
             ['ID', 'Dosen', 'Waktu tidak bisa hadir'])
-        instructors = data.get_instructors()
+        instructors = data.ambil_dosen()
         for i in range(0, len(instructors)):
-            times = instructors[i].get_no_times()
+            times = instructors[i].ambil_waktu_sakral()
             tempStr = ""
             for j in range(0, len(times) - 1):
                 tempStr += times[j].__str__() + " | "
             if times:
                 tempStr += times[len(times) - 1].__str__()
-            availableInstructorsTable.add_row(
-                [instructors[i].get_id(), instructors[i].get_name(), tempStr])
-        print(availableInstructorsTable)
+            tableDosenTersedia.add_row(
+                [instructors[i].ambil_id(), instructors[i].ambil_nama(), tempStr])
+        print(tableDosenTersedia)
 
-    def print_room(self):
-        availableRoomsTable = prettytable.PrettyTable(
+    def cetak_ruang_kelas(self):
+        tableRuanganTersedia = prettytable.PrettyTable(
             ['Ruangan #', 'Kapasitas maksimal'])
-        rooms = data.get_rooms()
+        rooms = data.ambil_ruangan()
         for i in range(0, len(rooms)):
-            availableRoomsTable.add_row(
-                [str(rooms[i].get_number()), str(rooms[i].get_seatingCapacity())])
-        print(availableRoomsTable)
+            tableRuanganTersedia.add_row(
+                [str(rooms[i].ambil_nomor()), str(rooms[i].ambil_kapasitas_mahasiswa())])
+        print(tableRuanganTersedia)
 
-    def print_meeting_times(self):
-        availableMeetingTimeTable = prettytable.PrettyTable(
+    def cetak_waktu_pertemuan(self):
+        tableWaktuPertemuanTersedia = prettytable.PrettyTable(
             ['ID', 'Waktu pertemuan', 'Durasi'])
-        meetingTimes = data.get_meetingTimes()
+        meetingTimes = data.ambil_waktu_pertemuan()
         for i in range(0, len(meetingTimes)):
-            availableMeetingTimeTable.add_row(
-                [meetingTimes[i].get_id(),
-                 meetingTimes[i].get_time(),
-                 str(meetingTimes[i].get_durasi()) + ' Jam'])
-        print(availableMeetingTimeTable)
+            tableWaktuPertemuanTersedia.add_row(
+                [meetingTimes[i].ambil_id(),
+                 meetingTimes[i].ambil_waktu(),
+                 str(meetingTimes[i].ambil_durasi()) + ' Jam'])
+        print(tableWaktuPertemuanTersedia)
 
-    def print_generation(self, population):
+    def cetak_generasi(self, populasi):
         table1 = prettytable.PrettyTable(
             ['Jadwal # ', 'fitness', '# Konflik', 'Komponen [Semester, Mata kuliah, Ruangan, Dosen, Waktu]'])
-        schedules = population.get_schedules()
+        schedules = populasi.ambil_seluruh_jadwal()
         fittest = []
         for i in range(0, len(schedules)):
             table1.add_row(
                 [str(i), 
-                 round(schedules[i].get_fitness(), 3), 
-                 schedules[i].get_numberOfConflicts(), 
+                 round(schedules[i].ambil_fitnes(), 3), 
+                 schedules[i].ambil_jumlahKonflik(), 
                  schedules[i]])
-            fittest.append(round(schedules[i].get_fitness(), 3))
-        # print(table1)
+            fittest.append(round(schedules[i].ambil_fitnes(), 3))
+        print(table1)
         return max(fittest)
 
-    def print_schedule_as_table(self, schedule):
-        classes = schedule.get_classes()
+    def cetak_jadwal_sebagai_table(self, schedule):
+        classes = schedule.ambil_kelas()
         table = prettytable.PrettyTable(
             ['No', 'Mata Kuliah', 'SKS', 'Kelas', 'Dosen', 'Waktu', 'Ruangan'])
         matkul = None
         for i in range(0, len(classes)):
-            waktu = [waktu.get_id() for waktu in classes[i].get_meetingTime()]
+            waktu = [waktu.ambil_id() for waktu in classes[i].ambil_detail_waktu_pertemuan()]
 
-            nama_matkul = classes[i].get_course().get_name(
-            ) if matkul != classes[i].get_course().get_name() else ''
-            matkul = classes[i].get_course().get_name()
+            nama_matkul = classes[i].ambil_detail_mata_kuliah().ambil_nama() if matkul != classes[i].ambil_detail_mata_kuliah().ambil_nama() else ''
+            matkul = classes[i].ambil_detail_mata_kuliah().ambil_nama()
 
             table.add_row(
                 [str(i + 1),
                  nama_matkul,
-                 classes[i].get_course().get_sks(),
-                 classes[i].get_kelas(),
-                 classes[i].get_instructor().get_name(),
+                 classes[i].ambil_detail_mata_kuliah().ambil_sks(),
+                 classes[i].ambil_kelas(),
+                 classes[i].ambil_detail_dosen().ambil_nama(),
                  (', ').join(waktu),
-                 classes[i].get_room().get_number()
+                 classes[i].ambil_detail_ruangan().ambil_nomor()
                  ])
-        # print(table)
+        print(table)
         return table
 
 
@@ -554,38 +663,124 @@ def cetak_ke_txt(hasil):
     file.close()
 
 
+def export_beban_sks(schedule, path: str):
+    workbook = xl.load_workbook(path)
+    sheet = workbook.worksheets[1]
+
+    classes = schedule.ambil_kelas()
+    data_beban_sks = []
+
+    for kelas in classes:
+        dosen = kelas.ambil_detail_dosen().ambil_nama()
+        nama_matkul = kelas.ambil_detail_mata_kuliah().ambil_nama()
+        sks = int(kelas.ambil_detail_mata_kuliah().ambil_sks())
+
+        if not any(item["dosen"] == dosen and item["nama_matkul"] == nama_matkul for item in data_beban_sks):
+            data_beban_sks.append({
+                "dosen": dosen,
+                "nama_matkul": nama_matkul,
+                "sks": sks,
+                "total_sks": 0,
+                "kelas": ""
+            })
+
+    for beban in data_beban_sks:
+        for kelas in classes:
+            if beban["dosen"] == kelas.ambil_detail_dosen().ambil_nama():
+                beban["total_sks"] += int(kelas.ambil_detail_mata_kuliah().ambil_sks())
+                beban["kelas"] += kelas.ambil_kelas()
+
+    data_beban_sks.sort(key=lambda x: (x["dosen"], x["nama_matkul"]))
+
+    for i, beban in enumerate(data_beban_sks):
+        if i == 0 or beban["dosen"] != data_beban_sks[i-1]["dosen"] or beban["nama_matkul"] != data_beban_sks[i-1]["nama_matkul"]:
+            sheet.append([beban["dosen"], beban["nama_matkul"], beban["sks"], beban["total_sks"], beban["kelas"]])
+
+    workbook.save(path)
+
+
+def export_ke_excel(name: str, schedule):
+    excel_manager = PY_XL(f"Rancangan Jadwal {name}.xlsx")
+    excel_manager.create_excel_file()
+
+    xlPath = excel_manager.xlPath
+    # menyimpan data ke sheet 1
+    workbook = xl.load_workbook(xlPath)
+    workbook._active_sheet_index = 0
+    sheet = workbook.active
+
+    classes = schedule.ambil_kelas()
+    data = []
+
+    for kelas in classes:
+        nama_matkul = kelas.ambil_detail_mata_kuliah().ambil_nama()
+        total_mhs = kelas.ambil_detail_mata_kuliah().ambil_total_mahasiswa()
+        perkiraan_mhs = int(kelas.ambil_detail_mata_kuliah().ambil_kelas()) * total_mhs
+        metode = kelas.ambil_detail_mata_kuliah().ambil_metode_belajar()
+        dosen = kelas.ambil_detail_dosen().ambil_nama()
+        kelas_kuliah = kelas.ambil_kelas()
+        ruangan = kelas.ambil_detail_ruangan().ambil_nomor()
+
+        waktu_senin = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("SEN")]
+        waktu_senin = (",").join(waktu_senin) + f" {kelas_kuliah}" + "/" + ruangan if waktu_senin else ""
+        waktu_selasa = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("SEL")]
+        waktu_selasa = (",").join(waktu_selasa) + f" {kelas_kuliah}" + "/" + ruangan if waktu_selasa else ""
+        waktu_rabu = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("RAB")]
+        waktu_rabu = (",").join(waktu_rabu) + f" {kelas_kuliah}" + "/" + ruangan if waktu_rabu else ""
+        waktu_kamis = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("KAM")]
+        waktu_kamis = (",").join(waktu_kamis) + f" {kelas_kuliah}" + "/" + ruangan if waktu_kamis else ""
+        waktu_jumat = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("JUM")]
+        waktu_jumat = (",").join(waktu_jumat) + f" {kelas_kuliah}" + "/" + ruangan if waktu_jumat else ""
+        waktu_sabtu = [str(waktu.ambil_id())[3:] for waktu in kelas.ambil_detail_waktu_pertemuan() if str(waktu.ambil_id()).startswith("SAB")]
+        waktu_sabtu = (",").join(waktu_sabtu) + f" {kelas_kuliah}" + "/" + ruangan if waktu_sabtu else ""
+
+        data.append((nama_matkul, perkiraan_mhs, metode, kelas_kuliah, dosen, waktu_senin, waktu_selasa, waktu_rabu, waktu_kamis, waktu_jumat, waktu_sabtu, total_mhs))
+
+    data.sort(key=lambda x: (x[0], x[4]))
+
+    for i, item in enumerate(data):
+        sheet.append(item)
+
+    workbook.save(xlPath)
+    export_beban_sks(schedule, xlPath)
+
 # Mulai proses / MAIN
 
 data = None
 
-def run(nilai_data):
+def jalankan(nilai_data):
     global data
     data = nilai_data
     banyak_iterasi = 0
     nilai_fitnes = None
+    exported = False
     displayMgr = DisplayMgr()
-    # displayMgr.print_available_data()
+    # displayMgr.cetak_seluruh_data()
     generationNumber = 0
-    # print("\n> Generation # " + str(generationNumber))
-    population = Population(POPULATION_SIZE)
-    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-    nilai_fitnes = displayMgr.print_generation(population)
+    print("\n> Generation # " + str(generationNumber))
+    populasi = Populasi(UKURAN_POPULASI)
+    populasi.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
+    nilai_fitnes = displayMgr.cetak_generasi(populasi)
     # it will print fittest generation of schedule
-    hasil = displayMgr.print_schedule_as_table(population.get_schedules()[0])
-    geneticAlgorithm = GeneticAlgorithm()
-    while (population.get_schedules()[0].get_fitness() != 1.0):
+    hasil = displayMgr.cetak_jadwal_sebagai_table(populasi.ambil_seluruh_jadwal()[0])
+    geneticAlgorithm = AlgoritmaGenetika()
+    while (populasi.ambil_seluruh_jadwal()[0].ambil_fitnes() != 1.0):
         generationNumber += 1
         # print("\n> Generation # " + str(generationNumber))
-        population = geneticAlgorithm.evolve(population)
-        population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-        nilai_fitnes_2 = displayMgr.print_generation(population)
-        hasil = displayMgr.print_schedule_as_table(population.get_schedules()[0])
-        if nilai_fitnes == nilai_fitnes_2 and banyak_iterasi < 50:
+        populasi = geneticAlgorithm.evolve(populasi)
+        populasi.ambil_seluruh_jadwal().sort(key=lambda x: x.ambil_fitnes(), reverse=True)
+        nilai_fitnes_2 = displayMgr.cetak_generasi(populasi)
+        hasil = displayMgr.cetak_jadwal_sebagai_table(populasi.ambil_seluruh_jadwal()[0])
+        if nilai_fitnes == nilai_fitnes_2 and banyak_iterasi < MAX_PERULANGAN:
             banyak_iterasi += 1
         elif nilai_fitnes != nilai_fitnes_2:
             nilai_fitnes = nilai_fitnes_2
             banyak_iterasi = 0
         else:
+            export_ke_excel(data.ambil_semester()[-1].ambil_nama(), populasi.ambil_seluruh_jadwal()[0])
+            exported = True
             break
     cetak_ke_txt(hasil)
-    return 'OK', nilai_fitnes
+    if not exported:
+        export_ke_excel(data.ambil_semester()[-1].ambil_nama(), populasi.ambil_seluruh_jadwal()[0])
+    return 'OK', f'{nilai_fitnes}, dan konflik : {int((1 / nilai_fitnes) - 1)}'
