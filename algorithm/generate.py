@@ -271,13 +271,13 @@ class Jadwal:
                         break
 
                     # cek jenis matkul topsus di hari yang sama = konflik + 1
-                    jenis_matkul = classes[i].ambil_detail_mata_kuliah().ambil_jenis_matkul()
-                    if (panjang_kode_hari == str(classes[j].ambil_detail_waktu_pertemuan()[0].ambil_id()[:3]) and
-                        jenis_matkul == classes[j].ambil_detail_mata_kuliah().ambil_jenis_matkul() and jenis_matkul == 'Pilihan' and
-                        classes[i].ambil_detail_mata_kuliah().ambil_nama() != classes[j].ambil_detail_mata_kuliah().ambil_nama() and
-                        classes[i].ambil_id() != classes[j].ambil_id()):
-                        self._jumlah_konflik += 1
-                        break
+                    # jenis_matkul = classes[i].ambil_detail_mata_kuliah().ambil_jenis_matkul()
+                    # if (panjang_kode_hari == str(classes[j].ambil_detail_waktu_pertemuan()[0].ambil_id()[:3]) and
+                    #     jenis_matkul == classes[j].ambil_detail_mata_kuliah().ambil_jenis_matkul() and jenis_matkul == 'Pilihan' and
+                    #     classes[i].ambil_detail_mata_kuliah().ambil_nama() != classes[j].ambil_detail_mata_kuliah().ambil_nama() and
+                    #     classes[i].ambil_id() != classes[j].ambil_id()):
+                    #     self._jumlah_konflik += 1
+                    #     break
 
                     # buat pengecekan dosen yang sama mengampu matkul yang sama jika tidak 1 hari konflik + 1
                     # memaksa di 1 hari yang sama untuk dosen = matkul yang sama
