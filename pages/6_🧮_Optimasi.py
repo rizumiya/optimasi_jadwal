@@ -73,6 +73,9 @@ def main():
                         run_optimizer = jalankan(Data(id_semester[0]))
                         if  run_optimizer[0] == 'OK':
                             text = tampil_hasil()
+                        else:
+                            st.error(run_optimizer[0], icon="🚨")
+                            text = tampil_hasil()
                         end_time = time.time()
                         elapsed_time = end_time - start_time
                         if elapsed_time >= 60:
