@@ -9,7 +9,7 @@ UKURAN_POPULASI = 40 #15 #30
 JUMLAH_JADWAL_ELIT = 5 #1 #4
 UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
 TINGKAT_MUTASI = 0.1
-MAX_PERULANGAN = 10000
+MAX_PERULANGAN = 1000
 JADWAL_PAGI = ("1", "2")
 
 class Data:
@@ -628,7 +628,7 @@ class DisplayMgr:
                  schedules[i].ambil_jumlahKonflik(), 
                  schedules[i]])
             fittest.append(round(schedules[i].ambil_fitnes(), 3))
-        # print(table1)
+        print(table1)
         return max(fittest)
 
     def cetak_jadwal_sebagai_table(self, schedule):
@@ -651,7 +651,7 @@ class DisplayMgr:
                  (', ').join(waktu),
                  classes[i].ambil_detail_ruangan().ambil_nomor()
                  ])
-        # print(table)
+        print(table)
         return table
 
 
