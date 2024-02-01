@@ -6,12 +6,12 @@ from .normalize import *
 from .export_excel import PY_XL
 
 UKURAN_POPULASI = 40 #15 #30
-JUMLAH_JADWAL_ELIT = 5 #1 #4
-UKURAN_SELEKSI_TURNAMEN = 10 #3 #10
+JUMLAH_JADWAL_ELIT = 3 #1 #4
+UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
 TINGKAT_MUTASI = 0.1
-MAX_PERULANGAN = 500
+MAX_PERULANGAN = 5000
 JADWAL_PAGI = ("1")
-MAX_SKS_MATKUL = 5
+MAX_SKS_MATKUL = 4
 
 class Data:
     def __init__(self, id_semester):
