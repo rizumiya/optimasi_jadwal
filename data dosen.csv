@@ -1,36 +1,41 @@
 id,nidn,nama,matkul,waktu
-2,196611041991071110677540,"Drs., Wahyu Pujiyono, M. Kom.","211830731 - , 211820230 - , 211820911 - ",Tersedia setiap waktu
-3,197002062005011001,"Eko Aribowo, S.T., M.Kom.","211850131 - , 211810331 - , 211860631 - ",Tersedia setiap waktu
-4,197307102004091110951298,"Murinto, S.Si., M.Kom.","211810430 - , 211860220 - , 211851131 - , 211851231 - , 211840231 - , 211861131 - , 211861531 - ",Tersedia setiap waktu
-5,197310142005011001,"Ali Tarmuji, S.T., M.Cs.","211810331 - , 211830431 - , 211850930 - , 211820731 - , 211840131 - , 211860330 - ",Tersedia setiap waktu
-6,197312212000021110847277,"Taufiq Ismail, S.T., M.Cs.","211810331 - , 211870440 - , 211830531 - , 211820731 - , 211840630 - , 211840711 - , 211860330 - ",Tersedia setiap waktu
-7,197405212000021110862028,"Sunardi, S.T., M.T., Ph.D.",211860220 - ,Tersedia setiap waktu
-8,197512162001030110880702,"Sri Winiarti, S.T., M.Cs.","211830341 - , 211830641 - , 211851431 - , 211860220 - , 211840531 - , 211860120 - ",Tersedia setiap waktu
-9,197608192005012001,"Nur Rochmah Dyah PA, S.T., M.Kom.","211810531 - , 211850131 - , 211850420 - , 211820631 - , 211860120 - , 211860631 - ",Tersedia setiap waktu
-10,197907202005011002,"Bambang Robiin, S.T.,M.T.","211810230 - , 211810811 - , 211870440 - , 211820430 - , 211860431 - , 211861331 - ",Tersedia setiap waktu
-11,198008102002101110915675,"Prof. Dr. Ir. H. Imam Riadi, M.Kom.",211850531 - ,Tersedia setiap waktu
-12,198011152005011002,"Fiftin Noviyanto, S.T., M.Cs.","211850731 - , 211860731 - ",Tersedia setiap waktu
-13,198307122011041110896292,"Herman Yuliansyah, S.T., M.Eng.","211830431 - , 211820731 - , 211860220 - , 211861031 - ",Tersedia setiap waktu
-14,198501262009090110925468,"Arfiani Nur Khusna, S.T., M.Kom.","211810531 - , 211830531 - , 211851531 - , 211850420 - , 211840131 - , 211860220 - , 211860120 - ",Tersedia setiap waktu
-15,198608042016060111236590,"Dwi Normawati, S.T., M.Eng.","211810531 - , 211851131 - , 211850831 - , 211851431 - , 211840831 - , 211840330 - ",Tersedia setiap waktu
-16,198709202016060111095511,"Ika Arfiani, S.T., M.Cs.","211850331 - , 211870820 - , 211810430 - , 211860431 - , 211860931 - ",Tersedia setiap waktu
-17,198806232016061111221618,"Supriyanto, S.T., M.T.","211830431 - , 211860220 - , 211830531 - , 211870720 - , 211840330 - , 211861031 - , 211820731 - , 211860731 - ",Tersedia setiap waktu
-18,198811242015081111212828,"Adhi Prahara, S.Si., M.Cs.","211810430 - , 211851231 - , 211850631 - , 211840231 - , 211861131 - , 211861531 - ",Tersedia setiap waktu
-19,198910192016060111236278,"Murein Miksa Mardhia, S.T., M.T.","211810630 - , 211850420 - , 211850520 - ",Tersedia setiap waktu
-20,198911052016011111222650,"Ahmad Azhari, S.Kom., M.Eng.","211810430 - , 211840231 - , 211861331 - , 211861431 - ",Tersedia setiap waktu
-21,199307062019081111325666,"Faisal Fajri Rahani, S.Si., M.Cs.","211810430 - , 211830431 - , 211830531 - , 211851331 - , 211820430 - , 211820320 - , 211840131 - ",Tersedia setiap waktu
-22,60030475,"Drs., Tedy Setiadi, M.T.","211850831 - , 211850520 - , 211840131 - , 211840831 - ",Tersedia setiap waktu
-23,60030476,"Ardiansyah, S.T., M.Cs.","211850930 - , 211851031 - , 211820230 - , 211820911 - , 211860220 - , 211860330 - ",Tersedia setiap waktu
-24,60030480,"Ir., Ardi Pujiyanta, M.T.","211830731 - , 211850520 - , 211851131 - , 211820230 - , 211820911 - , 211840831 - , 211860330 - ",Tersedia setiap waktu
-25,60040497,"Dewi Soyusiowaty, S.T., M.T.","211830341 - , 211850520 - , 211860220 - , 211850420 - , 211820631 - , 211860120 - , 211861231 - ",Tersedia setiap waktu
-26,60110647,"Anna Hendri Soleliza Jones, S.Kom., M.Cs.","211830341 - , 211830641 - , 211851531 - , 211840531 - , 211861231 - ",Tersedia setiap waktu
-27,60150773,"Lisna Zahrotun, S.T., M.Cs.","211810630 - , 211830641 - , 211860220 - , 211850831 - , 211820631 - , 211860931 - ",Tersedia setiap waktu
-28,60160979,"Jefree Fahana, S.T., M.Kom","211810630 - , 211830341 - , 211820430 - , 211840330 - ",Tersedia setiap waktu
-29,60160980,"Nuril Anwar, S.T., M.Kom","211830531 - , 211870720 - , 211850531 - , 211860120 - , 211840630 - , 211840711 - , 211860531 - ",Tersedia setiap waktu
-30,60181172,"Guntur Maulana Zamroni, B.Sc., M.Kom.","211810630 - , 211850131 - , 211850331 - , 211850420 - , 211820320 - , 211840630 - , 211840711 - , 211860120 - ",Tersedia setiap waktu
-31,60191223,"Dinan Yulianto, S.T., M.Eng.","211810230 - , 211810811 - , 211850331 - , 211860431 - , 211860731 - ",Tersedia setiap waktu
-32,60191225,"Miftahurrahma Rosyda, S.Kom., M.Eng.","211830341 - , 211830641 - , 211851431 - , 211820631 - , 211840531 - , 211861431 - , 211840330 - , 211860120 - , 211861031 - ",Tersedia setiap waktu
-33,60960140,"Drs, Abdul Fadlil, M.T., Ph.D.",211860220 - ,Tersedia setiap waktu
-34,60960147,"Mushlihudin, S.T., M.T.","211850131 - , 211870820 - , 211830531 - , 211820430 - , 211840131 - , 211860931 - , 211840630 - , 211840711 - ",Tersedia setiap waktu
-35,60980174,"Rusydi Umar, M.T., Ph.D.","211810230 - , 211810811 - , 211830731 - , 211820230 - , 211820911 - , 211820320 - ",Tersedia setiap waktu
-36,00000000,Dosen Ghaib,211880260 - ,Tersedia setiap waktu
+1,196611041991071110677540,"Drs., Wahyu Pujiyono, M. Kom.","211830731 - , 211820230 - A | B | C | D, 211820911 - A | B | C | D",Tersedia setiap waktu
+2,197002062005011001,"Eko Aribowo, S.T., M.Kom.","211850131 - , 211810331 - , 211860631 - A | B",Tersedia setiap waktu
+3,197307102004091110951298,"Murinto, S.Si., M.Kom.","211810430 - , 211860220 - F, 211851131 - , 211851231 - , 211840231 - A | B | F, 211861131 - C, 211861531 - A",Tersedia setiap waktu
+4,197310142005011001,"Ali Tarmuji, S.T., M.Cs.","211810331 - , 211830431 - , 211850930 - , 211820731 - G | H | I, 211840131 - I, 211860330 - A | B | G | H",Tersedia setiap waktu
+5,197312212000021110847277,"Taufiq Ismail, S.T., M.Cs.","211810331 - , 211870440 - , 211830531 - , 211820731 - C | E, 211840630 - E | A, 211840711 - E | A, 211860330 - E | F",Tersedia setiap waktu
+6,197405212000021110862028,"Sunardi, S.T., M.T., Ph.D.",211860220 - G,Tersedia setiap waktu
+7,197512162001030110880702,"Sri Winiarti, S.T., M.Cs.","211830341 - , 211830641 - , 211851431 - , 211860220 - B, 211840531 - A | B | G | J, 211860120 - E | J",Tersedia setiap waktu
+8,197608192005012001,"Nur Rochmah Dyah PA, S.T., M.Kom.","211810531 - , 211850131 - , 211850420 - , 211820631 - A | B | J, 211860120 - B, 211860631 - C | D",Tersedia setiap waktu
+9,197907202005011002,"Bambang Robiin, S.T.,M.T.","211810230 - , 211810811 - , 211870440 - , 211820430 - F | G | H, 211860431 - I | J, 211861331 - C | D",Tersedia setiap waktu
+10,198008102002101110915675,"Prof. Dr. Ir. H. Imam Riadi, M.Kom.",211850531 - C | D,Tersedia setiap waktu
+11,198011152005011002,"Fiftin Noviyanto, S.T., M.Cs.","211850731 - , 211860731 - C",Tersedia setiap waktu
+12,198307122011041110896292,"Herman Yuliansyah, S.T., M.Eng.","211830431 - , 211820731 - A | B | F | J, 211860220 - I, 211861031 - D",Tersedia setiap waktu
+13,198501262009090110925468,"Arfiani Nur Khusna, S.T., M.Kom.","211810531 - , 211830531 - , 211851531 - , 211850420 - , 211840131 - A | C | D | G, 211860220 - D, 211860120 - F | G",Tersedia setiap waktu
+14,198608042016060111236590,"Dwi Normawati, S.T., M.Eng.","211810531 - , 211851131 - , 211850831 - , 211851431 - , 211840831 - A | C | D | I, 211840330 - C | D",Tersedia setiap waktu
+15,198709202016060111095511,"Ika Arfiani, S.T., M.Cs.","211850331 - , 211870820 - , 211810430 - , 211860431 - A | B | C | D, 211860931 - , 211860831 - A | B",Tersedia setiap waktu
+16,198806232016061111221618,"Supriyanto, S.T., M.T.","211830431 - , 211860220 - C, 211830531 - , 211870720 - , 211840330 - A | B, 211861031 - B | C, 211820731 - D, 211860731 - D",Tersedia setiap waktu
+17,198811242015081111212828,"Adhi Prahara, S.Si., M.Cs.","211810430 - , 211851231 - , 211850631 - , 211840231 - C | D | E, 211861131 - A | B, 211861531 - B | C",Tersedia setiap waktu
+18,198910192016060111236278,"Murein Miksa Mardhia, S.T., M.T.","211810630 - , 211850420 - , 211850520 - , 211840330 - G | H | I | J, 211860120 - H | I, 211861031 - A",Tersedia setiap waktu
+19,198911052016011111222650,"Ahmad Azhari, S.Kom., M.Eng.","211810430 - , 211840231 - G | H | I | J, 211861331 - A | B, 211861431 - A",Tersedia setiap waktu
+20,199307062019081111325666,"Faisal Fajri Rahani, S.Si., M.Cs.","211810430 - , 211830431 - , 211830531 - , 211851331 - , 211820430 - C, 211820320 - B | E | G | H, 211840131 - E | J | F",Tersedia setiap waktu
+21,60030475,"Drs., Tedy Setiadi, M.T.","211850831 - , 211850520 - , 211840131 - B | E, 211840831 - B",Tersedia setiap waktu
+22,60030476,"Ardiansyah, S.T., M.Cs.","211850930 - , 211851031 - , 211820230 - E | H | I, 211820911 - E | H | I, 211860220 - G, 211860330 - ",Tersedia setiap waktu
+23,60030480,"Ir., Ardi Pujiyanta, M.T.","211830731 - , 211850520 - , 211851131 - , 211820230 - G, 211820911 - G, 211840831 - G | F | H | J, 211860330 - J | I",Tersedia setiap waktu
+24,60040497,"Dewi Soyusiowaty, S.T., M.T.","211830341 - , 211850520 - , 211860220 - A | H, 211850420 - , 211820631 - G | H, 211860120 - D, 211861231 - A | B",Tersedia setiap waktu
+25,60110647,"Anna Hendri Soleliza Jones, S.Kom., M.Cs.","211830341 - , 211830641 - , 211851531 - , 211840531 - C | D | F | I, 211861231 - C | D",Tersedia setiap waktu
+26,60150773,"Lisna Zahrotun, S.T., M.Cs.","211810630 - , 211830641 - , 211860220 - E, 211850831 - , 211820631 - C | D | E | F, 211860931 - , 211860831 - C",Tersedia setiap waktu
+27,60160979,"Jefree Fahana, S.T., M.Kom","211810630 - , 211830341 - , 211820430 - D | E | I | J, 211840330 - E | F",Tersedia setiap waktu
+28,60160980,"Nuril Anwar, S.T., M.Kom","211830531 - , 211870720 - A, 211850531 - , 211860120 - A, 211840630 - F | G | H, 211840711 - F | G | H, 211860531 - C | D",Tersedia setiap waktu
+29,60181172,"Guntur Maulana Zamroni, B.Sc., M.Kom.","211810630 - , 211850131 - , 211850331 - , 211850420 - , 211820320 - A | F | I | J, 211840630 - I | J, 211840711 - I | J, 211860120 - C",Tersedia setiap waktu
+30,60191223,"Dinan Yulianto, S.T., M.Eng.","211810230 - , 211810811 - , 211850331 - , 211860431 - E | F | G | H, 211860731 - A | B",Tersedia setiap waktu
+31,60191225,"Miftahurrahma Rosyda, S.Kom., M.Eng.","211830341 - , 211830641 - , 211851431 - , 211820631 - I, 211840531 - E | H, 211861431 - B | C | D, 211840330 - , 211860120 - , 211861031 - ",Tersedia setiap waktu
+32,60960140,"Drs, Abdul Fadlil, M.T., Ph.D.",211860220 - I,Tersedia setiap waktu
+33,60960147,"Mushlihudin, S.T., M.T.","211850131 - , 211870820 - , 211830531 - , 211820430 - A | B, 211840131 - H, 211860931 - A, 211840630 - B | C | D, 211840711 - B | C | D",Tersedia setiap waktu
+34,60980174,"Rusydi Umar, M.T., Ph.D.","211810230 - , 211810811 - , 211830731 - , 211820230 - F | J, 211820911 - F | J, 211820320 - C | D",Tersedia setiap waktu
+35,00000000,Dosen Skripsi,211880260 - ,Tersedia setiap waktu
+36,12345678,Dosen Pancasila,211810720 - ,Tersedia setiap waktu
+38,100100,Dosen Kapita Selekta,211870320 - ,Tersedia setiap waktu
+39,300033,Dosen SIG 1,211860831 - ,Tersedia setiap waktu
+40,300034,Dosen SIG 2,211860831 - ,Tersedia setiap waktu
+41,400044,Dosen STB 1,211860931 - ,Tersedia setiap waktu

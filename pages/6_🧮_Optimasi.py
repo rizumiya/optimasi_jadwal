@@ -62,7 +62,6 @@ def main():
         with colbtn[1]:
             lihat_jadwal = st.button('Lihat hasil optimasi sebelumnya')
         
-
         if jadwal_btn:
             if req1 and req2 and req3:
                 if cari != 'Belum ada data':

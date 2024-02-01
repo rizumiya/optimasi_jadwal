@@ -441,6 +441,8 @@ def tampil_kelas():
     id_list_kelas = []
     if db_kelas:
         for kelas in db_kelas:
+            if kelas[3] == '':
+                continue
             id_list_kelas.append(st.session_state['kelas'].index(kelas[3]))
         st.session_state['default_kelas'] = id_list_kelas
     else:

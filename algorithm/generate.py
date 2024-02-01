@@ -7,10 +7,11 @@ from .export_excel import PY_XL
 
 UKURAN_POPULASI = 40 #15 #30
 JUMLAH_JADWAL_ELIT = 5 #1 #4
-UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
+UKURAN_SELEKSI_TURNAMEN = 10 #3 #10
 TINGKAT_MUTASI = 0.1
-MAX_PERULANGAN = 10000
-JADWAL_PAGI = ("1", "2")
+MAX_PERULANGAN = 500
+JADWAL_PAGI = ("1")
+MAX_SKS_MATKUL = 5
 
 class Data:
     def __init__(self, id_semester):
@@ -261,6 +262,7 @@ class Jadwal:
                                 break
                             
                             if (classes[i].ambil_kelas() != classes[j].ambil_kelas() and 
+                                int(classes[i].ambil_detail_mata_kuliah().ambil_sks()) <= MAX_SKS_MATKUL and
                                 classes[i].ambil_detail_mata_kuliah().ambil_nama() == classes[j].ambil_detail_mata_kuliah().ambil_nama() and
                                 not kelas_bentrok):
                                 kelas_bentrok = True
@@ -301,7 +303,8 @@ class Jadwal:
                     #     break
 
             # buat pengecekan yang sudah dapat kelas pagi, gak boleh dapet kelas pagi lagi
-            if classes[i].ambil_detail_waktu_pertemuan()[0].ambil_id() in pagi:
+            if (classes[i].ambil_detail_waktu_pertemuan()[0].ambil_id() in pagi and
+                int(classes[i].ambil_detail_mata_kuliah().ambil_sks()) <= MAX_SKS_MATKUL):
                 if classes[i].ambil_kelas() in [kelas["kelas"] for kelas in list_kelas_pagi]:
                     self._jumlah_konflik += 1
                     continue
@@ -701,7 +704,7 @@ def export_beban_sks(schedule, path: str):
 
 
 def export_ke_excel(name: str, schedule):
-    excel_manager = PY_XL(f"Rancangan Jadwal {name}.xlsx")
+    excel_manager = PY_XL(f"Rancangan Jadwal {name}.xlsx".replace("/", "-"))
     excel_manager.create_excel_file()
 
     xlPath = excel_manager.xlPath

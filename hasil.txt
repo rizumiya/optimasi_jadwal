@@ -1,67 +1,240 @@
-+----+--------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
-| No |          Mata Kuliah           | SKS | Kelas |                   Dosen                   |        Waktu        | Ruangan  |
-+----+--------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
-| 1  |     Dasar Sistem Komputer      |  3  |   A   |          Ali Tarmuji, S.T., M.Cs.         |      RAB7, RAB8     | 4.1.5.59 |
-| 2  |                                |  3  |   B   |         Eko Aribowo, S.T., M.Kom.         |     SAB10, SAB11    | 4.1.5.60 |
-| 3  |                                |  3  |   C   |         Eko Aribowo, S.T., M.Kom.         |     KAM10, KAM11    | 4.1.5.57 |
-| 4  |                                |  3  |   D   |         Taufiq Ismail, S.T., M.Cs.        |      KAM1, KAM2     | 4.1.5.55 |
-| 5  |                                |  3  |   E   |          Ali Tarmuji, S.T., M.Cs.         |      RAB2, RAB3     | 4.1.5.59 |
-| 6  |                                |  3  |   F   |         Taufiq Ismail, S.T., M.Cs.        |     SAB10, SAB11    | 4.1.5.55 |
-| 7  |                                |  3  |   G   |         Eko Aribowo, S.T., M.Kom.         |      SEN7, SEN8     | 4.1.5.57 |
-| 8  |                                |  3  |   H   |         Eko Aribowo, S.T., M.Kom.         |     SEL10, SEL11    | 4.1.5.59 |
-| 9  |                                |  3  |   I   |         Taufiq Ismail, S.T., M.Cs.        |     JUM10, JUM11    | 4.1.5.60 |
-| 10 |       Pemrograman Mobile       |  3  |   A   |        Dinan Yulianto, S.T., M.Eng.       |      RAB4, RAB5     |  Online  |
-| 11 |                                |  3  |   B   |        Dinan Yulianto, S.T., M.Eng.       |     JUM10, JUM11    |  Online  |
-| 12 |                                |  3  |   C   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      KAM3, KAM4     |  Online  |
-| 13 |                                |  3  |   D   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      SAB7, SAB8     |  Online  |
-| 14 |                                |  3  |   E   |          Ika Arfiani, S.T., M.Cs.         |     SEL10, SEL11    |  Online  |
-| 15 |                                |  3  |   F   |        Dinan Yulianto, S.T., M.Eng.       |      SAB2, SAB3     |  Online  |
-| 16 |                                |  3  |   G   |        Dinan Yulianto, S.T., M.Eng.       |      SAB4, SAB5     |  Online  |
-| 17 |                                |  3  |   H   |        Dinan Yulianto, S.T., M.Eng.       |      JUM1, JUM2     |  Online  |
-| 18 |                                |  3  |   I   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |     SAB10, SAB11    |  Online  |
-| 19 |           Basis Data           |  4  |   A   |        Dewi Soyusiowaty, S.T., M.T.       |   SEL7, SEL8, SEL9  | 4.1.5.55 |
-| 20 |                                |  4  |   B   |         Sri Winiarti, S.T., M.Cs.         | SAB10, SAB11, SAB12 | 4.1.5.59 |
-| 21 |                                |  4  |   C   |         Sri Winiarti, S.T., M.Cs.         | RAB10, RAB11, RAB12 | 4.1.5.57 |
-| 22 |                                |  4  |   D   |         Jefree Fahana, S.T., M.Kom        |   SEN7, SEN8, SEN9  | 4.1.5.60 |
-| 23 |                                |  4  |   E   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |   RAB7, RAB8, RAB9  | 4.1.5.55 |
-| 24 |                                |  4  |   F   |         Jefree Fahana, S.T., M.Kom        | SEN10, SEN11, SEN12 | 4.1.5.55 |
-| 25 |                                |  4  |   G   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |   RAB1, RAB2, RAB3  | 4.1.5.55 |
-| 26 |                                |  4  |   H   |         Jefree Fahana, S.T., M.Kom        |   JUM4, JUM5, JUM6  | 4.1.5.57 |
-| 27 |                                |  4  |   I   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |   JUM7, JUM8, JUM9  | 4.1.5.57 |
-| 28 | Pemrograman Berorientasi Objek |  3  |   A   |     Faisal Fajri Rahani, S.Si., M.Cs.     |   SEL4, SEL5, SEL6  | 4.1.5.55 |
-| 29 |                                |  3  |   B   |           Supriyanto, S.T., M.T.          |   JUM7, JUM8, JUM9  | 4.1.5.60 |
-| 30 |                                |  3  |   C   |     Faisal Fajri Rahani, S.Si., M.Cs.     |   RAB3, RAB4, RAB5  | 4.1.5.60 |
-| 31 |                                |  3  |   D   |          Ali Tarmuji, S.T., M.Cs.         |   KAM3, KAM4, KAM5  | 4.1.5.57 |
-| 32 |                                |  3  |   E   |     Faisal Fajri Rahani, S.Si., M.Cs.     |   SEL7, SEL8, SEL9  | 4.1.5.57 |
-| 33 |                                |  3  |   F   |     Faisal Fajri Rahani, S.Si., M.Cs.     | SAB10, SAB11, SAB12 | 4.1.5.57 |
-| 34 |                                |  3  |   G   |           Supriyanto, S.T., M.T.          |   SAB4, SAB5, SAB6  | 4.1.5.60 |
-| 35 |                                |  3  |   H   |     Faisal Fajri Rahani, S.Si., M.Cs.     |   KAM7, KAM8, KAM9  | 4.1.5.55 |
-| 36 |                                |  3  |   I   |          Ali Tarmuji, S.T., M.Cs.         | JUM10, JUM11, JUM12 | 4.1.5.57 |
-| 37 |       Kecerdasan Buatan        |  3  |   A   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SAB4, SAB5     | 4.1.5.59 |
-| 38 |                                |  3  |   B   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |     KAM10, KAM11    | 4.1.5.60 |
-| 39 |                                |  3  |   C   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SEL1, SEL2     | 4.1.5.57 |
-| 40 |                                |  3  |   D   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SEN7, SEN8     | 4.1.5.59 |
-| 41 |                                |  3  |   E   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |     RAB10, RAB11    | 4.1.5.55 |
-| 42 |                                |  3  |   F   |         Sri Winiarti, S.T., M.Cs.         |      SEN4, SEN5     | 4.1.5.57 |
-| 43 |                                |  3  |   G   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |     SEL10, SEL11    | 4.1.5.55 |
-| 44 |                                |  3  |   H   |         Sri Winiarti, S.T., M.Cs.         |      SAB7, SAB8     | 4.1.5.55 |
-| 45 |                                |  3  |   I   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      KAM4, KAM5     | 4.1.5.55 |
-| 46 |                                |  3  |   J   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SAB2, SAB3     | 4.1.5.59 |
-| 47 |                                |  3  |   K   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |     SEN10, SEN11    | 4.1.5.55 |
-| 48 |        Grafika Komputer        |  3  |   A   |         Adhi Prahara, S.Si., M.Cs.        |      SEN4, SEN5     | 4.1.5.55 |
-| 49 |                                |  3  |   B   |        Ahmad Azhari, S.Kom., M.Eng.       |      SAB3, SAB4     | 4.1.5.55 |
-| 50 |                                |  3  |   C   |        Ahmad Azhari, S.Kom., M.Eng.       |      JUM7, JUM8     | 4.1.5.59 |
-| 51 |                                |  3  |   D   |         Adhi Prahara, S.Si., M.Cs.        |     SEL10, SEL11    | 4.1.5.57 |
-| 52 |                                |  3  |   E   |        Ahmad Azhari, S.Kom., M.Eng.       |     SEN10, SEN11    | 4.1.5.60 |
-| 53 |                                |  3  |   F   |        Ahmad Azhari, S.Kom., M.Eng.       |      RAB7, RAB8     | 4.1.5.57 |
-| 54 |                                |  3  |   G   |        Ahmad Azhari, S.Kom., M.Eng.       |     SAB10, SAB11    | 4.1.5.60 |
-| 55 |                                |  3  |   H   |        Ahmad Azhari, S.Kom., M.Eng.       |      SEL4, SEL5     | 4.1.5.60 |
-| 56 |                                |  3  |   I   |         Adhi Prahara, S.Si., M.Cs.        |      SEL1, SEL2     | 4.1.5.55 |
-| 57 |                                |  3  |   J   |         Adhi Prahara, S.Si., M.Cs.        |     JUM10, JUM11    | 4.1.5.55 |
-| 58 |                                |  3  |   K   |         Adhi Prahara, S.Si., M.Cs.        |      SEN2, SEN3     | 4.1.5.55 |
-| 59 |  Penambangan Data/Data mining  |  3  |   A   |          Drs., Tedy Setiadi, M.T.         |   JUM4, JUM5, JUM6  | 4.1.5.55 |
-| 60 |                                |  3  |   B   |        Dwi Normawati, S.T., M.Eng.        | RAB10, RAB11, RAB12 | 4.1.5.60 |
-| 61 |                                |  3  |   C   |        Lisna Zahrotun, S.T., M.Cs.        |   SAB7, SAB8, SAB9  | 4.1.5.57 |
-| 62 |                                |  3  |   D   |        Dwi Normawati, S.T., M.Eng.        |   SEL7, SEL8, SEL9  | 4.1.5.59 |
-| 63 |                                |  3  |   E   |        Dwi Normawati, S.T., M.Eng.        |   SEL4, SEL5, SEL6  | 4.1.5.59 |
-+----+--------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
++-----+-------------------------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
+|  No |                   Mata Kuliah                   | SKS | Kelas |                   Dosen                   |        Waktu        | Ruangan  |
++-----+-------------------------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
+|  1  |              Aljabar Linear Matrik              |  2  |   A   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      RAB7, RAB8     | 4.1.5.57 |
+|  2  |                                                 |  2  |   B   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      SEN3, SEN4     | 4.1.5.59 |
+|  3  |                                                 |  2  |   C   |          Rusydi Umar, M.T., Ph.D.         |     SEL11, SEL12    | 4.1.5.60 |
+|  4  |                                                 |  2  |   D   |          Rusydi Umar, M.T., Ph.D.         |     KAM10, KAM11    | 4.1.5.58 |
+|  5  |                                                 |  2  |   E   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      KAM8, KAM9     | 4.1.5.56 |
+|  6  |                                                 |  2  |   F   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      SAB8, SAB9     | 4.1.5.59 |
+|  7  |                                                 |  2  |   G   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      JUM5, JUM6     | 4.1.5.58 |
+|  8  |                                                 |  2  |   H   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      SEL2, SEL3     | 4.1.5.63 |
+|  9  |                                                 |  2  |   I   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      RAB2, RAB3     | 4.1.5.61 |
+|  10 |                                                 |  2  |   J   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      KAM3, KAM4     | 4.1.5.55 |
+|  11 |                                                 |  2  |   K   |          Rusydi Umar, M.T., Ph.D.         |      SEN7, SEN8     | 4.1.5.57 |
+|  12 |              Algoritma Pemrograman              |  3  |   A   |       Drs., Wahyu Pujiyono, M. Kom.       |   JUM3, JUM4, JUM5  | 4.1.5.63 |
+|  13 |                                                 |  3  |   B   |       Drs., Wahyu Pujiyono, M. Kom.       |   SAB3, SAB4, SAB5  | 4.1.5.63 |
+|  14 |                                                 |  3  |   C   |       Drs., Wahyu Pujiyono, M. Kom.       |   KAM7, KAM8, KAM9  | 4.1.5.63 |
+|  15 |                                                 |  3  |   D   |       Drs., Wahyu Pujiyono, M. Kom.       | SEN10, SEN11, SEN12 | 4.1.5.57 |
+|  16 |                                                 |  3  |   E   |          Ardiansyah, S.T., M.Cs.          |   JUM7, JUM8, JUM9  | 4.1.5.58 |
+|  17 |                                                 |  3  |   F   |          Rusydi Umar, M.T., Ph.D.         |   SAB3, SAB4, SAB5  | 4.1.5.56 |
+|  18 |                                                 |  3  |   G   |         Ir., Ardi Pujiyanta, M.T.         | KAM10, KAM11, KAM12 | 4.1.5.56 |
+|  19 |                                                 |  3  |   H   |          Ardiansyah, S.T., M.Cs.          |   KAM4, KAM5, KAM6  | 4.1.5.65 |
+|  20 |                                                 |  3  |   I   |          Ardiansyah, S.T., M.Cs.          |   KAM1, KAM2, KAM3  | 4.1.5.59 |
+|  21 |                                                 |  3  |   J   |          Rusydi Umar, M.T., Ph.D.         |   SEL7, SEL8, SEL9  | 4.1.5.60 |
+|  22 |                                                 |  3  |   K   |         Ir., Ardi Pujiyanta, M.T.         |   SEN7, SEN8, SEN9  | 4.1.5.59 |
+|  23 |         Praktikum Algoritma Pemrograman         |  1  |   A   |       Drs., Wahyu Pujiyono, M. Kom.       |        KAM12        | 4.1.5.64 |
+|  24 |                                                 |  1  |   B   |       Drs., Wahyu Pujiyono, M. Kom.       |         RAB6        | 4.1.5.63 |
+|  25 |                                                 |  1  |   C   |       Drs., Wahyu Pujiyono, M. Kom.       |         SEN5        | 4.1.5.56 |
+|  26 |                                                 |  1  |   D   |       Drs., Wahyu Pujiyono, M. Kom.       |         JUM2        | 4.1.5.57 |
+|  27 |                                                 |  1  |   E   |          Ardiansyah, S.T., M.Cs.          |         JUM3        | 4.1.5.61 |
+|  28 |                                                 |  1  |   F   |          Rusydi Umar, M.T., Ph.D.         |        JUM11        | 4.1.5.59 |
+|  29 |                                                 |  1  |   G   |         Ir., Ardi Pujiyanta, M.T.         |         SAB4        | 4.1.5.55 |
+|  30 |                                                 |  1  |   H   |          Ardiansyah, S.T., M.Cs.          |         SEL6        | 4.1.5.59 |
+|  31 |                                                 |  1  |   I   |          Ardiansyah, S.T., M.Cs.          |         RAB2        | 4.1.5.57 |
+|  32 |                                                 |  1  |   J   |          Rusydi Umar, M.T., Ph.D.         |         SEN7        | 4.1.5.55 |
+|  33 |                                                 |  1  |   K   |       Drs., Wahyu Pujiyono, M. Kom.       |         SEN6        | 4.1.5.62 |
+|  34 |                Matematika Diskrit               |  3  |   A   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |      RAB4, RAB5     | 4.1.5.58 |
+|  35 |                                                 |  3  |   B   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |      SAB3, SAB4     | 4.1.5.64 |
+|  36 |                                                 |  3  |   C   |        Lisna Zahrotun, S.T., M.Cs.        |      SEL7, SEL8     | 4.1.5.55 |
+|  37 |                                                 |  3  |   D   |        Lisna Zahrotun, S.T., M.Cs.        |      JUM4, JUM5     | 4.1.5.55 |
+|  38 |                                                 |  3  |   E   |        Lisna Zahrotun, S.T., M.Cs.        |      SAB4, SAB5     | 4.1.5.55 |
+|  39 |                                                 |  3  |   F   |        Lisna Zahrotun, S.T., M.Cs.        |      KAM7, KAM8     | 4.1.5.61 |
+|  40 |                                                 |  3  |   G   |        Dewi Soyusiowaty, S.T., M.T.       |      JUM7, JUM8     | 4.1.5.61 |
+|  41 |                                                 |  3  |   H   |        Dewi Soyusiowaty, S.T., M.T.       |      SEL3, SEL4     | 4.1.5.62 |
+|  42 |                                                 |  3  |   I   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      KAM4, KAM5     | 4.1.5.62 |
+|  43 |                                                 |  3  |   J   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |      SEN3, SEN4     | 4.1.5.56 |
+|  44 |                                                 |  3  |   K   |        Dewi Soyusiowaty, S.T., M.T.       |     RAB10, RAB11    | 4.1.5.60 |
+|  45 |                 Pemrograman Web                 |  3  |   A   |      Herman Yuliansyah, S.T., M.Eng.      |     SEL10, SEL11    | 4.1.5.55 |
+|  46 |                                                 |  3  |   B   |      Herman Yuliansyah, S.T., M.Eng.      |      SEN7, SEN8     | 4.1.5.60 |
+|  47 |                                                 |  3  |   C   |         Taufiq Ismail, S.T., M.Cs.        |      SAB4, SAB5     | 4.1.5.65 |
+|  48 |                                                 |  3  |   D   |           Supriyanto, S.T., M.T.          |      RAB3, RAB4     | 4.1.5.59 |
+|  49 |                                                 |  3  |   E   |         Taufiq Ismail, S.T., M.Cs.        |     JUM10, JUM11    | 4.1.5.63 |
+|  50 |                                                 |  3  |   F   |      Herman Yuliansyah, S.T., M.Eng.      |     KAM10, KAM11    | 4.1.5.62 |
+|  51 |                                                 |  3  |   G   |          Ali Tarmuji, S.T., M.Cs.         |      JUM3, JUM4     | 4.1.5.56 |
+|  52 |                                                 |  3  |   H   |          Ali Tarmuji, S.T., M.Cs.         |      SAB3, SAB4     | 4.1.5.62 |
+|  53 |                                                 |  3  |   I   |          Ali Tarmuji, S.T., M.Cs.         |      SEL7, SEL8     | 4.1.5.58 |
+|  54 |                                                 |  3  |   J   |      Herman Yuliansyah, S.T., M.Eng.      |      KAM4, KAM5     | 4.1.5.62 |
+|  55 |                                                 |  3  |   K   |      Herman Yuliansyah, S.T., M.Eng.      |      RAB3, RAB4     | 4.1.5.57 |
+|  56 |               Arsitektur Komputer               |  3  |   A   |          Mushlihudin, S.T., M.T.          |   RAB2, RAB3, RAB4  | 4.1.5.65 |
+|  57 |                                                 |  3  |   B   |          Mushlihudin, S.T., M.T.          |   SAB4, SAB5, SAB6  | 4.1.5.63 |
+|  58 |                                                 |  3  |   C   |     Faisal Fajri Rahani, S.Si., M.Cs.     | RAB10, RAB11, RAB12 | 4.1.5.58 |
+|  59 |                                                 |  3  |   D   |         Jefree Fahana, S.T., M.Kom        |   JUM2, JUM3, JUM4  | 4.1.5.63 |
+|  60 |                                                 |  3  |   E   |         Jefree Fahana, S.T., M.Kom        |   RAB7, RAB8, RAB9  | 4.1.5.61 |
+|  61 |                                                 |  3  |   F   |         Bambang Robiin, S.T.,M.T.         |   RAB4, RAB5, RAB6  | 4.1.5.59 |
+|  62 |                                                 |  3  |   G   |         Bambang Robiin, S.T.,M.T.         |   JUM3, JUM4, JUM5  | 4.1.5.62 |
+|  63 |                                                 |  3  |   H   |         Bambang Robiin, S.T.,M.T.         | RAB10, RAB11, RAB12 | 4.1.5.58 |
+|  64 |                                                 |  3  |   I   |         Jefree Fahana, S.T., M.Kom        | SAB10, SAB11, SAB12 | 4.1.5.58 |
+|  65 |                                                 |  3  |   J   |         Jefree Fahana, S.T., M.Kom        |   SAB7, SAB8, SAB9  | 4.1.5.56 |
+|  66 |                                                 |  3  |   K   |          Mushlihudin, S.T., M.T.          |   JUM7, JUM8, JUM9  | 4.1.5.61 |
+|  67 |     Analisis dan Perancangan Perangkat Lunak    |  3  |   A   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SAB3, SAB4     | 4.1.5.57 |
+|  68 |                                                 |  3  |   B   |          Drs., Tedy Setiadi, M.T.         |      SAB4, SAB5     | 4.1.5.56 |
+|  69 |                                                 |  3  |   C   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SEL4, SEL5     | 4.1.5.58 |
+|  70 |                                                 |  3  |   D   |      Arfiani Nur Khusna, S.T., M.Kom.     |     SEL10, SEL11    | 4.1.5.61 |
+|  71 |                                                 |  3  |   E   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      JUM7, JUM8     | 4.1.5.55 |
+|  72 |                                                 |  3  |   F   |     Faisal Fajri Rahani, S.Si., M.Cs.     |     RAB10, RAB11    | 4.1.5.56 |
+|  73 |                                                 |  3  |   G   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SEL2, SEL3     | 4.1.5.56 |
+|  74 |                                                 |  3  |   H   |          Mushlihudin, S.T., M.T.          |      SEN4, SEN5     | 4.1.5.63 |
+|  75 |                                                 |  3  |   I   |          Ali Tarmuji, S.T., M.Cs.         |      SEN7, SEN8     | 4.1.5.65 |
+|  76 |                                                 |  3  |   J   |     Faisal Fajri Rahani, S.Si., M.Cs.     |      RAB7, RAB8     | 4.1.5.65 |
+|  77 |                                                 |  3  |   K   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SAB2, SAB3     | 4.1.5.58 |
+|  78 |          Interaksi Manusia dan Komputer         |  3  |   A   |           Supriyanto, S.T., M.T.          |     SEL10, SEL11    | 4.1.5.64 |
+|  79 |                                                 |  3  |   B   |           Supriyanto, S.T., M.T.          |      SAB7, SAB8     | 4.1.5.58 |
+|  80 |                                                 |  3  |   C   |        Dwi Normawati, S.T., M.Eng.        |     JUM10, JUM11    | 4.1.5.55 |
+|  81 |                                                 |  3  |   D   |        Dwi Normawati, S.T., M.Eng.        |      SEN1, SEN2     | 4.1.5.57 |
+|  82 |                                                 |  3  |   E   |         Jefree Fahana, S.T., M.Kom        |      SEN2, SEN3     | 4.1.5.63 |
+|  83 |                                                 |  3  |   F   |         Jefree Fahana, S.T., M.Kom        |      SEL2, SEL3     | 4.1.5.63 |
+|  84 |                                                 |  3  |   G   |      Murein Miksa Mardhia, S.T., M.T.     |      RAB1, RAB2     | 4.1.5.55 |
+|  85 |                                                 |  3  |   H   |      Murein Miksa Mardhia, S.T., M.T.     |     SAB10, SAB11    | 4.1.5.57 |
+|  86 |                                                 |  3  |   I   |      Murein Miksa Mardhia, S.T., M.T.     |      SEL3, SEL4     | 4.1.5.64 |
+|  87 |                                                 |  3  |   J   |      Murein Miksa Mardhia, S.T., M.T.     |      JUM2, JUM3     | 4.1.5.60 |
+|  88 |                                                 |  3  |   K   |         Jefree Fahana, S.T., M.Kom        |      SEN2, SEN3     | 4.1.5.61 |
+|  89 |                Kecerdasan Buatan                |  3  |   A   |         Sri Winiarti, S.T., M.Cs.         |     SAB10, SAB11    | 4.1.5.62 |
+|  90 |                                                 |  3  |   B   |         Sri Winiarti, S.T., M.Cs.         |      SAB2, SAB3     | 4.1.5.56 |
+|  91 |                                                 |  3  |   C   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SEN7, SEN8     | 4.1.5.60 |
+|  92 |                                                 |  3  |   D   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      RAB4, RAB5     | 4.1.5.65 |
+|  93 |                                                 |  3  |   E   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      SEL4, SEL5     | 4.1.5.56 |
+|  94 |                                                 |  3  |   F   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |     SEN10, SEN11    | 4.1.5.62 |
+|  95 |                                                 |  3  |   G   |         Sri Winiarti, S.T., M.Cs.         |      RAB2, RAB3     | 4.1.5.64 |
+|  96 |                                                 |  3  |   H   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |     KAM10, KAM11    | 4.1.5.58 |
+|  97 |                                                 |  3  |   I   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      SEL4, SEL5     | 4.1.5.65 |
+|  98 |                                                 |  3  |   J   |         Sri Winiarti, S.T., M.Cs.         |     JUM10, JUM11    | 4.1.5.60 |
+|  99 |                                                 |  3  |   K   |         Sri Winiarti, S.T., M.Cs.         |      RAB2, RAB3     | 4.1.5.57 |
+| 100 |                 Grafika Komputer                |  3  |   A   |           Murinto, S.Si., M.Kom.          |     SEN10, SEN11    | 4.1.5.61 |
+| 101 |                                                 |  3  |   B   |           Murinto, S.Si., M.Kom.          |      JUM4, JUM5     | 4.1.5.64 |
+| 102 |                                                 |  3  |   C   |         Adhi Prahara, S.Si., M.Cs.        |      SEL4, SEL5     | 4.1.5.63 |
+| 103 |                                                 |  3  |   D   |         Adhi Prahara, S.Si., M.Cs.        |      SEL2, SEL3     | 4.1.5.59 |
+| 104 |                                                 |  3  |   E   |         Adhi Prahara, S.Si., M.Cs.        |      SEL7, SEL8     | 4.1.5.61 |
+| 105 |                                                 |  3  |   F   |           Murinto, S.Si., M.Kom.          |      SEN7, SEN8     | 4.1.5.57 |
+| 106 |                                                 |  3  |   G   |        Ahmad Azhari, S.Kom., M.Eng.       |     JUM10, JUM11    | 4.1.5.56 |
+| 107 |                                                 |  3  |   H   |        Ahmad Azhari, S.Kom., M.Eng.       |      KAM4, KAM5     | 4.1.5.63 |
+| 108 |                                                 |  3  |   I   |        Ahmad Azhari, S.Kom., M.Eng.       |      SEN1, SEN2     | 4.1.5.56 |
+| 109 |                                                 |  3  |   J   |        Ahmad Azhari, S.Kom., M.Eng.       |      RAB7, RAB8     | 4.1.5.55 |
+| 110 |                                                 |  3  |   K   |           Murinto, S.Si., M.Kom.          |      SAB2, SAB3     | 4.1.5.60 |
+| 111 |      Komunikasi Data dan Jaringan Komputer      |  3  |   A   |         Taufiq Ismail, S.T., M.Cs.        |   KAM7, KAM8, KAM9  | 4.1.5.62 |
+| 112 |                                                 |  3  |   B   |          Mushlihudin, S.T., M.T.          |   SAB4, SAB5, SAB6  | 4.1.5.57 |
+| 113 |                                                 |  3  |   C   |          Mushlihudin, S.T., M.T.          |   KAM7, KAM8, KAM9  | 4.1.5.59 |
+| 114 |                                                 |  3  |   D   |          Mushlihudin, S.T., M.T.          | SEL10, SEL11, SEL12 | 4.1.5.62 |
+| 115 |                                                 |  3  |   E   |         Taufiq Ismail, S.T., M.Cs.        |   SEL4, SEL5, SEL6  | 4.1.5.58 |
+| 116 |                                                 |  3  |   F   |          Nuril Anwar, S.T., M.Kom         |   KAM2, KAM3, KAM4  | 4.1.5.57 |
+| 117 |                                                 |  3  |   G   |          Nuril Anwar, S.T., M.Kom         |   JUM7, JUM8, JUM9  | 4.1.5.60 |
+| 118 |                                                 |  3  |   H   |          Nuril Anwar, S.T., M.Kom         |   SEL7, SEL8, SEL9  | 4.1.5.61 |
+| 119 |                                                 |  3  |   I   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |   SEN2, SEN3, SEN4  | 4.1.5.55 |
+| 120 |                                                 |  3  |   J   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |   SAB3, SAB4, SAB5  | 4.1.5.59 |
+| 121 |                                                 |  3  |   K   |          Mushlihudin, S.T., M.T.          |   RAB7, RAB8, RAB9  | 4.1.5.56 |
+| 122 | Praktikum Komunikasi Data dan Jaringan Komputer |  1  |   A   |         Taufiq Ismail, S.T., M.Cs.        |         SEL8        | 4.1.5.64 |
+| 123 |                                                 |  1  |   B   |          Mushlihudin, S.T., M.T.          |         RAB3        | 4.1.5.56 |
+| 124 |                                                 |  1  |   C   |          Mushlihudin, S.T., M.T.          |         SEL6        | 4.1.5.62 |
+| 125 |                                                 |  1  |   D   |          Mushlihudin, S.T., M.T.          |         SAB4        | 4.1.5.58 |
+| 126 |                                                 |  1  |   E   |         Taufiq Ismail, S.T., M.Cs.        |         SEN9        | 4.1.5.57 |
+| 127 |                                                 |  1  |   F   |          Nuril Anwar, S.T., M.Kom         |         SEL9        | 4.1.5.59 |
+| 128 |                                                 |  1  |   G   |          Nuril Anwar, S.T., M.Kom         |         JUM8        | 4.1.5.63 |
+| 129 |                                                 |  1  |   H   |          Nuril Anwar, S.T., M.Kom         |         SAB6        | 4.1.5.65 |
+| 130 |                                                 |  1  |   I   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |        JUM10        | 4.1.5.65 |
+| 131 |                                                 |  1  |   J   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |         KAM2        | 4.1.5.55 |
+| 132 |                                                 |  1  |   K   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |         SEL4        | 4.1.5.62 |
+| 133 |                Strategi Algoritma               |  3  |   A   |        Dwi Normawati, S.T., M.Eng.        |      SEN2, SEN3     | 4.1.5.58 |
+| 134 |                                                 |  3  |   B   |          Drs., Tedy Setiadi, M.T.         |      SEL4, SEL5     | 4.1.5.57 |
+| 135 |                                                 |  3  |   C   |        Dwi Normawati, S.T., M.Eng.        |      SAB7, SAB8     | 4.1.5.62 |
+| 136 |                                                 |  3  |   D   |        Dwi Normawati, S.T., M.Eng.        |      RAB7, RAB8     | 4.1.5.64 |
+| 137 |                                                 |  3  |   E   |         Ir., Ardi Pujiyanta, M.T.         |      RAB3, RAB4     | 4.1.5.62 |
+| 138 |                                                 |  3  |   F   |         Ir., Ardi Pujiyanta, M.T.         |      SAB2, SAB3     | 4.1.5.55 |
+| 139 |                                                 |  3  |   G   |         Ir., Ardi Pujiyanta, M.T.         |      KAM7, KAM8     | 4.1.5.55 |
+| 140 |                                                 |  3  |   H   |         Ir., Ardi Pujiyanta, M.T.         |     SAB10, SAB11    | 4.1.5.65 |
+| 141 |                                                 |  3  |   I   |        Dwi Normawati, S.T., M.Eng.        |      SEL7, SEL8     | 4.1.5.65 |
+| 142 |                                                 |  3  |   J   |         Ir., Ardi Pujiyanta, M.T.         |      SAB3, SAB4     | 4.1.5.61 |
+| 143 |                                                 |  3  |   K   |          Drs., Tedy Setiadi, M.T.         |     KAM10, KAM11    | 4.1.5.58 |
+| 144 |             Rekayasa Perangkat Lunak            |  3  |   A   |          Ali Tarmuji, S.T., M.Cs.         | KAM10, KAM11, KAM12 | 4.1.5.60 |
+| 145 |                                                 |  3  |   B   |          Ali Tarmuji, S.T., M.Cs.         | RAB10, RAB11, RAB12 | 4.1.5.56 |
+| 146 |                                                 |  3  |   C   |         Ir., Ardi Pujiyanta, M.T.         |   JUM3, JUM4, JUM5  | 4.1.5.61 |
+| 147 |                                                 |  3  |   D   |         Ir., Ardi Pujiyanta, M.T.         |   KAM3, KAM4, KAM5  | 4.1.5.60 |
+| 148 |                                                 |  3  |   E   |         Taufiq Ismail, S.T., M.Cs.        | KAM10, KAM11, KAM12 | 4.1.5.65 |
+| 149 |                                                 |  3  |   F   |         Taufiq Ismail, S.T., M.Cs.        |   SAB7, SAB8, SAB9  | 4.1.5.61 |
+| 150 |                                                 |  3  |   G   |          Ali Tarmuji, S.T., M.Cs.         |   SEL1, SEL2, SEL3  | 4.1.5.58 |
+| 151 |                                                 |  3  |   H   |          Ali Tarmuji, S.T., M.Cs.         |   SAB3, SAB4, SAB5  | 4.1.5.60 |
+| 152 |                                                 |  3  |   I   |         Ir., Ardi Pujiyanta, M.T.         | SEL10, SEL11, SEL12 | 4.1.5.59 |
+| 153 |                                                 |  3  |   J   |         Ir., Ardi Pujiyanta, M.T.         |   SEL7, SEL8, SEL9  | 4.1.5.60 |
+| 154 |                                                 |  3  |   K   |          Ali Tarmuji, S.T., M.Cs.         |   SEL4, SEL5, SEL6  | 4.1.5.61 |
+| 155 |                   Rekayasa Web                  |  3  |   A   |        Dinan Yulianto, S.T., M.Eng.       |      SEN4, SEN5     | 4.1.5.58 |
+| 156 |                                                 |  3  |   B   |        Dinan Yulianto, S.T., M.Eng.       |      SEN7, SEN8     | 4.1.5.59 |
+| 157 |                                                 |  3  |   C   |       Fiftin Noviyanto, S.T., M.Cs.       |      JUM3, JUM4     | 4.1.5.60 |
+| 158 |                                                 |  3  |   D   |           Supriyanto, S.T., M.T.          |      KAM2, KAM3     | 4.1.5.65 |
+| 159 |                                                 |  3  |   E   |        Dinan Yulianto, S.T., M.Eng.       |      RAB2, RAB3     | 4.1.5.59 |
+| 160 |                                                 |  3  |   F   |           Supriyanto, S.T., M.T.          |      JUM7, JUM8     | 4.1.5.61 |
+| 161 |                                                 |  3  |   G   |        Dinan Yulianto, S.T., M.Eng.       |     JUM10, JUM11    | 4.1.5.64 |
+| 162 |            Sistem Informasi Geografis           |  3  |   A   |          Ika Arfiani, S.T., M.Cs.         |      JUM2, JUM3     | 4.1.5.55 |
+| 163 |                                                 |  3  |   B   |          Ika Arfiani, S.T., M.Cs.         |      JUM7, JUM8     | 4.1.5.65 |
+| 164 |                                                 |  3  |   C   |        Lisna Zahrotun, S.T., M.Cs.        |      KAM2, KAM3     | 4.1.5.62 |
+| 165 |                                                 |  3  |   D   |          Ika Arfiani, S.T., M.Cs.         |      SEN7, SEN8     | 4.1.5.63 |
+| 166 |                  Deep learning                  |  3  |   A   |         Adhi Prahara, S.Si., M.Cs.        |     RAB10, RAB11    | 4.1.5.63 |
+| 167 |                                                 |  3  |   B   |         Adhi Prahara, S.Si., M.Cs.        |      KAM7, KAM8     | 4.1.5.58 |
+| 168 |                                                 |  3  |   C   |           Murinto, S.Si., M.Kom.          |      SAB7, SAB8     | 4.1.5.63 |
+| 169 |                                                 |  3  |   D   |         Adhi Prahara, S.Si., M.Cs.        |      RAB2, RAB3     | 4.1.5.63 |
+| 170 |                                                 |  3  |   E   |           Murinto, S.Si., M.Kom.          |      RAB7, RAB8     | 4.1.5.63 |
+| 171 |            Pengembangan Aplikasi Game           |  3  |   A   |        Ahmad Azhari, S.Kom., M.Eng.       |      KAM4, KAM5     | 4.1.5.62 |
+| 172 |                                                 |  3  |   B   |        Ahmad Azhari, S.Kom., M.Eng.       |      KAM7, KAM8     | 4.1.5.64 |
+| 173 |                                                 |  3  |   C   |         Bambang Robiin, S.T.,M.T.         |      KAM3, KAM4     | 4.1.5.56 |
+| 174 |                                                 |  3  |   D   |         Bambang Robiin, S.T.,M.T.         |      KAM1, KAM2     | 4.1.5.60 |
+| 175 |                                                 |  3  |   E   |        Ahmad Azhari, S.Kom., M.Eng.       |      SEL3, SEL4     | 4.1.5.55 |
+| 176 |                   Kriptografi                   |  3  |   A   |         Eko Aribowo, S.T., M.Kom.         |      SEL4, SEL5     | 4.1.5.56 |
+| 177 |                                                 |  3  |   B   |         Eko Aribowo, S.T., M.Kom.         |     SEL10, SEL11    | 4.1.5.57 |
+| 178 |                                                 |  3  |   C   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |      SAB7, SAB8     | 4.1.5.63 |
+| 179 |                                                 |  3  |   D   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |     SEN10, SEN11    | 4.1.5.55 |
+| 180 |                                                 |  3  |   E   |         Eko Aribowo, S.T., M.Kom.         |      JUM3, JUM4     | 4.1.5.57 |
+| 181 |       Manajemen Proyek Teknologi Informasi      |  2  |   A   |          Nuril Anwar, S.T., M.Kom         |      JUM5, JUM6     |  Online  |
+| 182 |                                                 |  2  |   B   |     Nur Rochmah Dyah PA, S.T., M.Kom.     |      SEL7, SEL8     |  Online  |
+| 183 |                                                 |  2  |   C   |   Guntur Maulana Zamroni, B.Sc., M.Kom.   |      KAM8, KAM9     |  Online  |
+| 184 |                                                 |  2  |   D   |        Dewi Soyusiowaty, S.T., M.T.       |     SAB10, SAB11    |  Online  |
+| 185 |                                                 |  2  |   E   |         Sri Winiarti, S.T., M.Cs.         |     SEL10, SEL11    |  Online  |
+| 186 |                                                 |  2  |   F   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SEN5, SEN6     |  Online  |
+| 187 |                                                 |  2  |   G   |      Arfiani Nur Khusna, S.T., M.Kom.     |      SEN7, SEN8     |  Online  |
+| 188 |                                                 |  2  |   H   |      Murein Miksa Mardhia, S.T., M.T.     |      SAB8, SAB9     |  Online  |
+| 189 |                                                 |  2  |   I   |      Murein Miksa Mardhia, S.T., M.T.     |     KAM11, KAM12    |  Online  |
+| 190 |                                                 |  2  |   J   |         Sri Winiarti, S.T., M.Cs.         |     KAM10, KAM11    |  Online  |
+| 191 |              Metodologi Penelitian              |  2  |   A   |        Dewi Soyusiowaty, S.T., M.T.       |      JUM2, JUM3     |  Online  |
+| 192 |                                                 |  2  |   B   |         Sri Winiarti, S.T., M.Cs.         |      SEN8, SEN9     |  Online  |
+| 193 |                                                 |  2  |   C   |           Supriyanto, S.T., M.T.          |      SEN5, SEN6     |  Online  |
+| 194 |                                                 |  2  |   D   |      Arfiani Nur Khusna, S.T., M.Kom.     |     RAB10, RAB11    |  Online  |
+| 195 |                                                 |  2  |   E   |        Lisna Zahrotun, S.T., M.Cs.        |      SEL7, SEL8     |  Online  |
+| 196 |                                                 |  2  |   F   |           Murinto, S.Si., M.Kom.          |      RAB4, RAB5     |  Online  |
+| 197 |                                                 |  2  |   G   |         Sunardi, S.T., M.T., Ph.D.        |      SEL2, SEL3     |  Online  |
+| 198 |                                                 |  2  |   H   |        Dewi Soyusiowaty, S.T., M.T.       |      JUM7, JUM8     |  Online  |
+| 199 |                                                 |  2  |   I   |      Herman Yuliansyah, S.T., M.Eng.      |      SAB2, SAB3     |  Online  |
+| 200 |               Teknologi Multimedia              |  3  |   A   |          Ika Arfiani, S.T., M.Cs.         |      KAM1, KAM2     |  Online  |
+| 201 |                                                 |  3  |   B   |          Ika Arfiani, S.T., M.Cs.         |      SAB7, SAB8     |  Online  |
+| 202 |                                                 |  3  |   C   |          Ika Arfiani, S.T., M.Cs.         |      SAB1, SAB2     |  Online  |
+| 203 |                                                 |  3  |   D   |          Ika Arfiani, S.T., M.Cs.         |      RAB7, RAB8     |  Online  |
+| 204 |                                                 |  3  |   E   |        Dinan Yulianto, S.T., M.Eng.       |      JUM2, JUM3     |  Online  |
+| 205 |                                                 |  3  |   F   |        Dinan Yulianto, S.T., M.Eng.       |      JUM1, JUM2     |  Online  |
+| 206 |                                                 |  3  |   G   |        Dinan Yulianto, S.T., M.Eng.       |      SAB4, SAB5     |  Online  |
+| 207 |                                                 |  3  |   H   |        Dinan Yulianto, S.T., M.Eng.       |      JUM4, JUM5     |  Online  |
+| 208 |                                                 |  3  |   I   |         Bambang Robiin, S.T.,M.T.         |      KAM2, KAM3     |  Online  |
+| 209 |                                                 |  3  |   J   |         Bambang Robiin, S.T.,M.T.         |      SEN7, SEN8     |  Online  |
+| 210 |                                                 |  3  |   K   |          Ika Arfiani, S.T., M.Cs.         |      KAM3, KAM4     |  Online  |
+| 211 |                     Skripsi                     |  0  |   A   |               Dosen Skripsi               |         KAM1        |  Online  |
+| 212 |                Keamanan Informasi               |  3  |   A   |          Nuril Anwar, S.T., M.Kom         |     SEL10, SEL11    |  Online  |
+| 213 |                                                 |  3  |   B   |          Nuril Anwar, S.T., M.Kom         |      SEN4, SEN5     |  Online  |
+| 214 |                                                 |  3  |   C   |          Nuril Anwar, S.T., M.Kom         |      KAM4, KAM5     |  Online  |
+| 215 |                                                 |  3  |   D   |          Nuril Anwar, S.T., M.Kom         |      JUM7, JUM8     |  Online  |
+| 216 |                                                 |  3  |   E   |          Nuril Anwar, S.T., M.Kom         |     KAM10, KAM11    |  Online  |
+| 217 |               Sistem terdistribusi              |  3  |   A   |          Mushlihudin, S.T., M.T.          |   SEN7, SEN8, SEN9  |  Online  |
+| 218 |                 Visualisasi Data                |  3  |   A   |      Murein Miksa Mardhia, S.T., M.T.     |      RAB3, RAB4     |  Online  |
+| 219 |                                                 |  3  |   B   |           Supriyanto, S.T., M.T.          |      SAB2, SAB3     |  Online  |
+| 220 |                                                 |  3  |   C   |           Supriyanto, S.T., M.T.          |      KAM4, KAM5     |  Online  |
+| 221 |                                                 |  3  |   D   |      Herman Yuliansyah, S.T., M.Eng.      |      KAM4, KAM5     |  Online  |
+| 222 |                                                 |  3  |   E   |           Supriyanto, S.T., M.T.          |      SAB4, SAB5     |  Online  |
+| 223 |                 Pengenalan Pola                 |  3  |   A   |        Ahmad Azhari, S.Kom., M.Eng.       |      SEL7, SEL8     |  Online  |
+| 224 |                                                 |  3  |   B   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      SAB7, SAB8     |  Online  |
+| 225 |                                                 |  3  |   C   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      JUM4, JUM5     |  Online  |
+| 226 |                                                 |  3  |   D   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      SEN1, SEN2     |  Online  |
+| 227 |                                                 |  3  |   E   |    Miftahurrahma Rosyda, S.Kom., M.Eng.   |      JUM7, JUM8     |  Online  |
+| 228 |               Penglihatan Komputer              |  3  |   A   |           Murinto, S.Si., M.Kom.          |      SAB4, SAB5     |  Online  |
+| 229 |                                                 |  3  |   B   |         Adhi Prahara, S.Si., M.Cs.        |      SEN3, SEN4     |  Online  |
+| 230 |                                                 |  3  |   C   |         Adhi Prahara, S.Si., M.Cs.        |      SAB1, SAB2     |  Online  |
+| 231 |                                                 |  3  |   D   |           Murinto, S.Si., M.Kom.          |     SEN10, SEN11    |  Online  |
+| 232 |             Pemrosesan Bahasa Alami             |  3  |   A   |        Dewi Soyusiowaty, S.T., M.T.       |      SEL3, SEL4     |  Online  |
+| 233 |                                                 |  3  |   B   |        Dewi Soyusiowaty, S.T., M.T.       |     SEL10, SEL11    |  Online  |
+| 234 |                                                 |  3  |   C   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |     SAB10, SAB11    |  Online  |
+| 235 |                                                 |  3  |   D   | Anna Hendri Soleliza Jones, S.Kom., M.Cs. |      JUM4, JUM5     |  Online  |
+| 236 |                                                 |  3  |   E   |        Dewi Soyusiowaty, S.T., M.T.       |      KAM2, KAM3     |  Online  |
++-----+-------------------------------------------------+-----+-------+-------------------------------------------+---------------------+----------+
