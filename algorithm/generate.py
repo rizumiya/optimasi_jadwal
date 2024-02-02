@@ -11,7 +11,7 @@ UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
 TINGKAT_MUTASI = 0.1
 MAX_PERULANGAN = 5000
 JADWAL_PAGI = ("1")
-MAX_SKS_MATKUL = 4
+MAX_SKS_MATKUL = 3
 
 class Data:
     def __init__(self, id_semester):
