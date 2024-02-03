@@ -11,7 +11,7 @@ UKURAN_SELEKSI_TURNAMEN = 13 #3 #10
 TINGKAT_MUTASI = 0.1
 MAX_PERULANGAN = 5000
 JADWAL_PAGI = ("1")
-MAX_SKS_MATKUL = 3
+MAX_KELAS_MATKUL = 3
 
 class Data:
     def __init__(self, id_semester):
@@ -261,9 +261,8 @@ class Jadwal:
                                 self._jumlah_konflik += 1
                                 break
                             
-                            if (classes[i].ambil_kelas() != classes[j].ambil_kelas() and 
-                                int(classes[i].ambil_detail_mata_kuliah().ambil_sks()) <= MAX_SKS_MATKUL and
-                                classes[i].ambil_detail_mata_kuliah().ambil_nama() == classes[j].ambil_detail_mata_kuliah().ambil_nama() and
+                            if (classes[i].ambil_kelas() == classes[j].ambil_kelas() and
+                                str(classes[i].ambil_detail_mata_kuliah().ambil_nama()) in matkul_paket and
                                 not kelas_bentrok):
                                 kelas_bentrok = True
                                 self._jumlah_konflik += 1
@@ -304,7 +303,7 @@ class Jadwal:
 
             # buat pengecekan yang sudah dapat kelas pagi, gak boleh dapet kelas pagi lagi
             if (classes[i].ambil_detail_waktu_pertemuan()[0].ambil_id() in pagi and
-                int(classes[i].ambil_detail_mata_kuliah().ambil_sks()) <= MAX_SKS_MATKUL):
+                int(classes[i].ambil_detail_mata_kuliah().ambil_kelas()) <= MAX_KELAS_MATKUL):
                 if classes[i].ambil_kelas() in [kelas["kelas"] for kelas in list_kelas_pagi]:
                     self._jumlah_konflik += 1
                     continue

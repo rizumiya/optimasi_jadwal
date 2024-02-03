@@ -144,3 +144,27 @@ matkul_3_sks_2_teori = [
 ]
 
 
+matkul_paket = [
+    "dasar pemrograman",
+    "sistem operasi",
+    "dasar sistem komputer",
+    "kalkulus informatika",
+    "logika informatika",
+    "manajemen data dan informasi",
+    "struktur data",
+    "pemrograman berorientasi objek" ,
+    "basis data",
+    "statistika informatika",
+    "aljabar linear matriks",
+    "algoritma pemrograman",
+    "praktikum algoritma pemrograman",
+    "matematika diskrit",
+    "pemrograman web",
+    "arsitektur komputer",
+    "analisis dan perancangan pl",
+    "interaksi manusia komputer",
+    "kecerdasan buatan",
+    "grafika komputer",
+    "komunikasi data dan jaringan komputer" ,
+    "strategi algoritma"
+]
